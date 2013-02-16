@@ -21,23 +21,35 @@ public class AccountRepositoryTest extends AbstractTestNGSpringContextTests {
 	@Inject
 	private AccountRepository repository;
 	
+	private Account createAccount(String name) {
+		Account account = new Account();
+		account.setName(name);
+		return account;
+	}
+	
 	@Test
 	public void createAccount() {
-		Account account = new Account();
-		account.setName(ACCOUNT_NAME);
-		account = repository.save(account);
+		Account account = createAccount(ACCOUNT_NAME);
+		repository.save(account);
 		Assert.notNull(account.getId());
 	}
 	
 	@Test(dependsOnMethods = "createAccount", expectedExceptions = DataIntegrityViolationException.class)
 	public void createAccountWithSameName() {
-		Account account = new Account();
-		account.setName(ACCOUNT_NAME);
-		account = repository.save(account);
+		createAccount();
 	}
 	
 	@Test(dependsOnMethods = "createAccount")
-	public void readAccount() {
-		Assert.isTrue(repository.count() == 1L);
+	public void createParentAndChildAccount() {
+		Account parent = createAccount("PARENT");
+		Account child = createAccount("CHILD");
+		child.setParent(parent);
+		repository.save(parent);
+		repository.save(child);
+	}
+	
+	@Test(dependsOnMethods = "createParentAndChildAccount")
+	public void countAccounts() {
+		Assert.isTrue(repository.count() == 3L);
 	}
 }
