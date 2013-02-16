@@ -9,7 +9,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 @Configuration
-@ComponentScan("com.milanogc.accounting.controller")  // <context:component-scan base-package="..." />
+@ComponentScan("com.milanogc.accounting.controller") // <context:component-scan base-package="..." />
 @EnableWebMvc // <mvc:annotation-driven />
 public class DispatcherConfig extends WebMvcConfigurerAdapter {
 	@Bean
@@ -21,7 +21,7 @@ public class DispatcherConfig extends WebMvcConfigurerAdapter {
 	}
 
 	@Override
-	  public void addResourceHandlers(ResourceHandlerRegistry registry) {
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		registry.addResourceHandler("/webjars/**").addResourceLocations("/webjars/");
 		registry.addResourceHandler("/resources/**").addResourceLocations("/resources/**");
 	}

@@ -5,8 +5,14 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.UniqueConstraint;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
+@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"posting_id", "account_id"}))
 @Entity
 public class Entry {
 	@Id
@@ -14,9 +20,12 @@ public class Entry {
 	private Long id;
 
 	@ManyToOne
+	@JoinColumn(name = "posting_id")
+	@JsonIgnore
 	private Posting posting;
 
 	@ManyToOne
+	@JoinColumn(name = "account_id")
 	private Account account;
 
 	@Column(nullable=false)

@@ -37,7 +37,7 @@ public class AppConfig {
 	}
 
 	@Bean
-    public EntityManagerFactory entityManagerFactory() {
+	public EntityManagerFactory entityManagerFactory() {
 		return entityManagerFactoryBean().getObject();
 	}
 
@@ -50,6 +50,7 @@ public class AppConfig {
 	private Properties additionlProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.hbm2ddl.auto", "create-drop");
+		properties.put("hibernate.show_sql", "true");
 		return properties;
 	}
 

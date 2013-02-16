@@ -1,11 +1,9 @@
 package com.milanogc.accounting.config;
 
-import javax.servlet.FilterRegistration;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
-import org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
@@ -22,11 +20,11 @@ public class AppInitializer implements WebApplicationInitializer {
 		ServletRegistration.Dynamic dispatcher = container.addServlet("dispatcher", new DispatcherServlet(dispatcherContext));
 		dispatcher.setLoadOnStartup(1);
 		dispatcher.addMapping("/");
-		addOpenEntityManagerInViewFilter(container);
+		/*addOpenEntityManagerInViewFilter(container);*/
 	}
 
-	private void addOpenEntityManagerInViewFilter(ServletContext context) {
+	/*private void addOpenEntityManagerInViewFilter(ServletContext context) {
 		FilterRegistration.Dynamic entity = context.addFilter("SpringOpenEntityManagerInViewFilter", OpenEntityManagerInViewFilter.class);
 		entity.addMappingForUrlPatterns(null, true, "/*");
-	}
+	}*/
 }
