@@ -7,7 +7,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 
+@Table(name = "account")
 @Entity
 public class Account {
 	@Id
@@ -20,6 +22,8 @@ public class Account {
 
 	@Column(unique = true, nullable = false)
 	private String name;
+
+	private String description;
 
 	public Account() {
 	}
@@ -46,5 +50,19 @@ public class Account {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	public String toString() {
+		return com.google.common.base.Objects.toStringHelper(this)
+			.addValue(getName())
+			.toString();
 	}
 }

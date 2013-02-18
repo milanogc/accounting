@@ -12,7 +12,7 @@ import javax.persistence.UniqueConstraint;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 
-@Table(uniqueConstraints = @UniqueConstraint(columnNames = {"posting_id", "account_id"}))
+@Table(name = "entry", uniqueConstraints = @UniqueConstraint(columnNames = {"posting_id", "account_id"}))
 @Entity
 public class Entry {
 	@Id
@@ -20,15 +20,15 @@ public class Entry {
 	private Long id;
 
 	@ManyToOne
-	@JoinColumn(name = "posting_id")
+	@JoinColumn(name = "posting_id", nullable = false)
 	@JsonIgnore
 	private Posting posting;
 
 	@ManyToOne
-	@JoinColumn(name = "account_id")
+	@JoinColumn(name = "account_id", nullable = false)
 	private Account account;
 
-	@Column(nullable=false)
+	@Column(nullable = false)
 	private Integer amount;
 
 	public Entry() {
@@ -62,5 +62,13 @@ public class Entry {
 
 	public void setAmount(int amount) {
 		this.amount = amount;
+	}
+
+	public String toString() {
+		return com.google.common.base.Objects.toStringHelper(this)
+			.addValue(getPosting())
+			.addValue(getAccount())
+			.addValue(getAmount())
+			.toString();
 	}
 }

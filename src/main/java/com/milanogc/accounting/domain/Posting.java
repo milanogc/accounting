@@ -11,9 +11,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+@Table(name = "posting")
 @Entity
 public class Posting {
 	@Id
@@ -69,5 +71,12 @@ public class Posting {
 
 	public void setEntries(List<Entry> entries) {
 		this.entries = entries;
+	}
+
+	public String toString() {
+		return com.google.common.base.Objects.toStringHelper(this)
+			.addValue(getDate())
+			.addValue(getEntries())
+			.toString();
 	}
 }

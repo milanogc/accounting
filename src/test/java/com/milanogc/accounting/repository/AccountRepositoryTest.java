@@ -24,7 +24,7 @@ public class AccountRepositoryTest extends AbstractTestNGSpringContextTests {
 
 	@Inject
 	private AccountRepository repository;
-	
+
 	@Inject
 	private PlatformTransactionManager transactionManager;
 
