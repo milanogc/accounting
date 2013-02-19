@@ -33,4 +33,8 @@ public class AccountService {
 	public List<Account> findDescendants(Account account) {
 		return accountClosureRepository.findDescendants(account);
 	}
+	
+	public List<Account> findPath(Account account) {
+		return accountClosureRepository.findPath(account);
+	}
 }

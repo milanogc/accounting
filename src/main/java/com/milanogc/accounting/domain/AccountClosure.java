@@ -5,6 +5,7 @@ import javax.persistence.Id;
 import javax.persistence.IdClass;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
@@ -15,10 +16,14 @@ import javax.persistence.UniqueConstraint;
 )
 @Entity
 @IdClass(AccountClosureId.class)
-@NamedQuery(
-	name = "AccountClosure.findDescendants",
-	query = "select ac.descendant from AccountClosure ac where ac.ancestor = ?1 and ac.descendant != ?1"
-)
+@NamedQueries({
+	@NamedQuery(
+		name = "AccountClosure.findDescendants",
+		query = "select ac.descendant from AccountClosure ac where ac.ancestor = ?1 and ac.descendant != ?1"),
+	@NamedQuery(
+		name = "AccountClosure.findPath",
+		query= "select ac.ancestor from AccountClosure ac where ac.descendant = ?1")
+})
 public class AccountClosure {
 	@Id
 	@ManyToOne

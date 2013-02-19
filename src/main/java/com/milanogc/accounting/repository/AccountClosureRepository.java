@@ -10,4 +10,5 @@ import com.milanogc.accounting.domain.AccountClosureId;
 
 public interface AccountClosureRepository extends JpaRepository<AccountClosure, AccountClosureId>, AccountClosureRepositoryCustom {
 	List<Account> findDescendants(Account account);
+	List<Account> findPath(Account account);
 }

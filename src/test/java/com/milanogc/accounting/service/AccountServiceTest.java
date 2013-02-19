@@ -40,4 +40,26 @@ public class AccountServiceTest extends AbstractTestNGSpringContextTests {
 		service.save(account);
 		Assert.notNull(account.getId());
 	}
+
+	@Test
+	public void createTree() {
+		Account milano = createAccount("Milano");
+		service.save(milano);
+		Account ativo = createAccount("Ativo");
+		ativo.setParent(milano);
+		service.save(ativo);
+		Account circulante = createAccount("Circulante");
+		circulante.setParent(ativo);
+		service.save(circulante);
+		Account aplicacoes = createAccount("Aplicações financeiras");
+		aplicacoes.setParent(circulante);
+		service.save(aplicacoes);
+		Account fundos = createAccount("Fundos de investimento");
+		fundos.setParent(aplicacoes);
+		service.save(fundos);
+		Account passivo = createAccount("Passivo");
+		passivo.setParent(milano);
+		service.save(passivo);
+		System.out.println(service.findPath(fundos));
+	}
 }
