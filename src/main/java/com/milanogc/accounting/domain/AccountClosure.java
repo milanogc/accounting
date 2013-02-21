@@ -21,8 +21,8 @@ import javax.persistence.UniqueConstraint;
 		name = "AccountClosure.findDescendants",
 		query = "select ac.descendant from AccountClosure ac where ac.ancestor = ?1 and ac.descendant != ?1"),
 	@NamedQuery(
-		name = "AccountClosure.findPath",
-		query= "select ac.ancestor from AccountClosure ac where ac.descendant = ?1")
+		name = "AccountClosure.findAncestors",
+		query = "select ac.ancestor from AccountClosure ac where ac.descendant = ?1")
 })
 public class AccountClosure {
 	@Id

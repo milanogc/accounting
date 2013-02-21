@@ -60,6 +60,6 @@ public class AccountServiceTest extends AbstractTestNGSpringContextTests {
 		Account passivo = createAccount("Passivo");
 		passivo.setParent(milano);
 		service.save(passivo);
-		System.out.println(service.findPath(fundos));
+		System.out.println(service.findAncestors(fundos));
 	}
 }
