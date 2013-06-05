@@ -2,7 +2,6 @@ package com.milanogc.accounting.service;
 
 import javax.inject.Inject;
 
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.support.AnnotationConfigContextLoader;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -14,7 +13,6 @@ import com.milanogc.accounting.config.ServiceConfig;
 import com.milanogc.accounting.domain.Account;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = {JpaRepositoryConfig.class, ServiceConfig.class})
-@Configurable
 public class AccountServiceTest extends AbstractTestNGSpringContextTests {
 	private static final String ACCOUNT_NAME = "ASSET";
 
