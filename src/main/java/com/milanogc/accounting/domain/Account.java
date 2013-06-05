@@ -18,7 +18,7 @@ public class Account {
 
 	@ManyToOne
 	@JoinColumn(name = "parent_id")
-	private Account parent = null;
+	private Account parent;
 
 	@Column(unique = true, nullable = false)
 	private String name;

@@ -14,10 +14,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
 import org.testng.annotations.Test;
 
-import com.milanogc.accounting.config.AppConfig;
+import com.milanogc.accounting.config.JpaRepositoryConfig;
 import com.milanogc.accounting.domain.Account;
 
-@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = AppConfig.class)
+@ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = JpaRepositoryConfig.class)
 @Configurable
 public class AccountRepositoryTest extends AbstractTestNGSpringContextTests {
 	private static String ACCOUNT_NAME = "ASSET";

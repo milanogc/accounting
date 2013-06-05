@@ -26,14 +26,17 @@ public class AccountService {
 		return account;
 	}
 
+	@Transactional(readOnly = true)
 	public Account findOne(Long id) {
 		return accountRepository.findOne(id);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public List<Account> findDescendants(Account account) {
 		return accountClosureRepository.findDescendants(account);
 	}
-	
+
+	@Transactional(readOnly = true)
 	public List<Account> findAncestors(Account account) {
 		return accountClosureRepository.findAncestors(account);
 	}

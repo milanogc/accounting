@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,19 +24,19 @@ public class AccountController {
 	@Inject
 	private AccountRepository repository;
 
-	@RequestMapping(method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public List<Account> list() {
 		return repository.findAll();
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = "application/json")
+	@RequestMapping(value = "{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseBody
 	public Account get(@PathVariable Long id) {
 		return repository.findOne(id);
 	}
 
-	@RequestMapping(method = RequestMethod.POST, consumes = "application/json", produces = "application/json")
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
 	@ResponseBody
 	public Account save(@RequestBody Account account) {
@@ -43,7 +44,7 @@ public class AccountController {
 		return repository.save(account);
 	}
 
-	@RequestMapping(value = "{id}", method = RequestMethod.PUT, produces = "application/json")
+	@RequestMapping(value = "{id}", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
 	@ResponseStatus(HttpStatus.OK)
 	@ResponseBody
 	public Account update(@RequestBody Account account, @PathVariable Long id) {

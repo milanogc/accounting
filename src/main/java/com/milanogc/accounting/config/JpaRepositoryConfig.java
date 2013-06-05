@@ -6,7 +6,6 @@ import javax.persistence.EntityManagerFactory;
 import javax.sql.DataSource;
 
 import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -19,13 +18,9 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@ComponentScan({ // <context:component-scan base-package="..." />
-	"com.milanogc.accounting.repository",
-	"com.milanogc.accounting.service"
-})
-@EnableJpaRepositories("com.milanogc.accounting.repository") // <jpa:repositories base-package="..." />
-@EnableTransactionManagement // <tx:annotation-driven />
-public class AppConfig {
+@EnableJpaRepositories("com.milanogc.accounting.repository")
+@EnableTransactionManagement
+public class JpaRepositoryConfig {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
 		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
