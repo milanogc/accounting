@@ -16,7 +16,7 @@ public class AccountClosureRepositoryImpl implements AccountClosureRepositoryCus
 
 	private static final String INSERT_SELF_CLOSURE = "insert into account_closure (ancestor_id, descendant_id) values (:account, :account)";
 	private static final String INSERT_OTHERS_CLOSURES = "insert into account_closure (ancestor_id, descendant_id) select ancestor_id, :descendant from account_closure where descendant_id = :ancestor";
-	// it would be a single insert but h2 do not support adding the following: union all select :descendant, :descendant
+	// it would be a single insert but h2 do not support the following: union all select :descendant, :descendant
 
 	public void save(Account account) {
 		Query query = entityManager.createNativeQuery(INSERT_SELF_CLOSURE);

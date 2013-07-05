@@ -59,7 +59,7 @@ public class Account {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
+
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
 			.addValue(getName())

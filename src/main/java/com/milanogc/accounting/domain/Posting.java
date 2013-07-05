@@ -27,7 +27,7 @@ public class Posting {
 	private Date date = new Date();
 
 	@OneToMany(fetch = FetchType.EAGER)
-	private List<Entry> entries = Collections.emptyList();
+	private List<Entry> entries = Collections.<Entry>emptyList();
 
 	public Posting() {
 	}

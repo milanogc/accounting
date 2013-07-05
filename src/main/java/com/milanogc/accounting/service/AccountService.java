@@ -20,6 +20,7 @@ public class AccountService {
 	@Inject
 	private AccountClosureRepository accountClosureRepository;
 
+	@Transactional
 	public Account save(Account account) {
 		account = accountRepository.save(account);
 		accountClosureRepository.save(account);

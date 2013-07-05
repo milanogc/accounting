@@ -28,12 +28,12 @@ public class AccountClosure {
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "ancestor_id")
-	Account ancestor;
+	private Account ancestor;
 
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "descendant_id")
-	Account descendant;
+	private Account descendant;
 
 	public Account getAncestor() {
 		return ancestor;
