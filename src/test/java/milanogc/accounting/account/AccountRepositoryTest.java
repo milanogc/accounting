@@ -4,6 +4,7 @@ import javax.inject.Inject;
 
 import milanogc.accounting.account.Account;
 import milanogc.accounting.account.AccountRepository;
+import milanogc.accounting.config.JpaRepositoryConfig;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,8 +17,6 @@ import org.springframework.transaction.support.TransactionCallback;
 import org.springframework.transaction.support.TransactionTemplate;
 import org.springframework.util.Assert;
 import org.testng.annotations.Test;
-
-import com.milanogc.accounting.config.JpaRepositoryConfig;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = JpaRepositoryConfig.class)
 @Configurable

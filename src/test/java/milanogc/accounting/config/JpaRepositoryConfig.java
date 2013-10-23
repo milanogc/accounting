@@ -1,4 +1,4 @@
-package com.milanogc.accounting.config;
+package milanogc.accounting.config;
 
 import java.util.Properties;
 
