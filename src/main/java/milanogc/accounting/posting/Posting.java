@@ -1,4 +1,4 @@
-package com.milanogc.accounting.domain;
+package milanogc.accounting.posting;
 
 import java.util.Collections;
 import java.util.Date;
@@ -14,6 +14,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+
+import milanogc.accounting.account.Account;
+import milanogc.accounting.entry.Entry;
 
 @Table(name = "posting")
 @Entity

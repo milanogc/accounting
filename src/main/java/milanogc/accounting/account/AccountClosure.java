@@ -1,4 +1,4 @@
-package com.milanogc.accounting.domain;
+package milanogc.accounting.account;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -24,7 +24,7 @@ import javax.persistence.UniqueConstraint;
 		name = "AccountClosure.findAncestors",
 		query = "select ac.ancestor from AccountClosure ac where ac.descendant = ?1")
 })
-public class AccountClosure {
+class AccountClosure {
 	@Id
 	@ManyToOne
 	@JoinColumn(name = "ancestor_id")
@@ -50,7 +50,7 @@ public class AccountClosure {
 	public void setDescendant(Account descendant) {
 		this.descendant = descendant;
 	}
-	
+
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
 			.addValue(getAncestor())

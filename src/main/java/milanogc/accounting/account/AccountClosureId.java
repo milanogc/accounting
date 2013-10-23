@@ -1,8 +1,8 @@
-package com.milanogc.accounting.domain;
+package milanogc.accounting.account;
 
 import java.io.Serializable;
 
-public class AccountClosureId implements Serializable {
+class AccountClosureId implements Serializable {
 	private static final long serialVersionUID = -4189626972936165203L;
 
 	private Account ancestor;

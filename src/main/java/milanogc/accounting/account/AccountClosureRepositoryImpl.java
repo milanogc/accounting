@@ -1,16 +1,10 @@
-package com.milanogc.accounting.repository.impl;
+package milanogc.accounting.account;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import org.springframework.stereotype.Repository;
-
-import com.milanogc.accounting.domain.Account;
-import com.milanogc.accounting.repository.AccountClosureRepositoryCustom;
-
-@Repository
-public class AccountClosureRepositoryImpl implements AccountClosureRepositoryCustom {
+class AccountClosureRepositoryImpl implements AccountClosureRepositoryCustom {
 	@PersistenceContext(unitName = "entityManagerFactory")
 	private EntityManager entityManager;
 

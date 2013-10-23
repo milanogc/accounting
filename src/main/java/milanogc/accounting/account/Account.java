@@ -1,4 +1,4 @@
-package com.milanogc.accounting.domain;
+package milanogc.accounting.account;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -64,5 +64,18 @@ public class Account {
 		return com.google.common.base.Objects.toStringHelper(this)
 			.addValue(getName())
 			.toString();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) return true;
+		if (obj == null) return false;
+
+		if (getClass().equals(obj.getClass())) {
+			final Account account = (Account) obj;
+			return com.google.common.base.Objects.equal(getName(), account.getName());
+		}
+
+		return false;
 	}
 }

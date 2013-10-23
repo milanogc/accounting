@@ -1,6 +1,9 @@
-package com.milanogc.accounting.repository;
+package milanogc.accounting.account;
 
 import javax.inject.Inject;
+
+import milanogc.accounting.account.Account;
+import milanogc.accounting.account.AccountRepository;
 
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -15,7 +18,6 @@ import org.springframework.util.Assert;
 import org.testng.annotations.Test;
 
 import com.milanogc.accounting.config.JpaRepositoryConfig;
-import com.milanogc.accounting.domain.Account;
 
 @ContextConfiguration(loader = AnnotationConfigContextLoader.class, classes = JpaRepositoryConfig.class)
 @Configurable

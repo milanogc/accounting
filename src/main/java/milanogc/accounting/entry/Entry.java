@@ -1,4 +1,4 @@
-package com.milanogc.accounting.domain;
+package milanogc.accounting.entry;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +9,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
+
+import milanogc.accounting.account.Account;
+import milanogc.accounting.posting.Posting;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 

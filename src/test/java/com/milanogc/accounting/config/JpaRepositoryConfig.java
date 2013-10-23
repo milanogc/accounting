@@ -18,13 +18,13 @@ import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories("com.milanogc.accounting.repository")
+@EnableJpaRepositories({"milanogc.accounting.account", "milanogc.accounting.entry", "milanogc.accounting.posting"})
 @EnableTransactionManagement
 public class JpaRepositoryConfig {
 	@Bean
 	public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
 		LocalContainerEntityManagerFactoryBean factoryBean = new LocalContainerEntityManagerFactoryBean();
-		factoryBean.setPackagesToScan("com.milanogc.accounting.domain");
+		factoryBean.setPackagesToScan("");
 		factoryBean.setDataSource(dataSource());
 		factoryBean.setJpaVendorAdapter(vendorAdapter());
 		factoryBean.setJpaProperties(additionlProperties());
@@ -45,7 +45,7 @@ public class JpaRepositoryConfig {
 	private Properties additionlProperties() {
 		Properties properties = new Properties();
 		properties.put("hibernate.hbm2ddl.auto", "create-drop");
-		properties.put("hibernate.show_sql", "true");
+		/*properties.put("hibernate.show_sql", "true");*/
 		return properties;
 	}
 
