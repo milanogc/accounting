@@ -1,81 +1,64 @@
 package milanogc.accounting.account;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.Date;
+import java.util.Objects;
 
-@Table(name = "account")
-@Entity
+// entity
 public class Account {
-	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
-
-	@ManyToOne
-	@JoinColumn(name = "parent_id")
-	private Account parent;
-
-	@Column(unique = true, nullable = false)
+	private AccountId accountId;
 	private String name;
-
+    private AccountId parentAccountId;
 	private String description;
+    private Date createdOn = new Date();
 
-	public Account() {
+    public Account(AccountId accountId, String name, AccountId parentAccountId, String description) {
+        setAccountId(accountId);
+        setName(name);
+        setParentAccountId(parentAccountId);
+        setDescription(description);
+    }
+
+	public AccountId accountId() {
+		return accountId;
 	}
 
-	public Long getId() {
-		return id;
+	private void setAccountId(AccountId accountId) {
+		this.accountId = Objects.requireNonNull(accountId, "The accountId must be provided.");
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public AccountId parentAccountId() {
+		return parentAccountId;
 	}
 
-	public Account getParent() {
-		return parent;
+	private void setParentAccountId(AccountId parentAccountId) {
+		this.parentAccountId = parentAccountId;
 	}
 
-	public void setParent(Account parent) {
-		this.parent = parent;
-	}
-
-	public String getName() {
+	public String name() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	private void setName(String name) {
+		this.name = Objects.requireNonNull(name, "The name must be provided.");
 	}
 
-	public String getDescription() {
+	public String description() {
 		return description;
 	}
 
-	public void setDescription(String description) {
+	private void setDescription(String description) {
 		this.description = description;
 	}
 
+    public Date createdOn() {
+        return createdOn;
+    }
+
+    @Override
 	public String toString() {
 		return com.google.common.base.Objects.toStringHelper(this)
-			.addValue(getName())
+            .addValue(accountId())
+			.addValue(name())
 			.toString();
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (obj == this) return true;
-		if (obj == null) return false;
-
-		if (getClass().equals(obj.getClass())) {
-			final Account account = (Account) obj;
-			return com.google.common.base.Objects.equal(getName(), account.getName());
-		}
-
-		return false;
 	}
 }
