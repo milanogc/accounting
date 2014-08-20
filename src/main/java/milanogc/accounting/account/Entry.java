@@ -2,51 +2,52 @@ package milanogc.accounting.account;
 
 // value object
 public class Entry {
-	private Account account;
-	private Integer amount;
 
-	public Entry(Account account, int amount) {
-		setAccount(account);
-		setAmount(amount);
-	}
+  private Account account;
+  private Integer amount;
 
-	public Account account() {
-		return account;
-	}
+  public Entry(Account account, int amount) {
+    setAccount(account);
+    setAmount(amount);
+  }
 
-	private void setAccount(Account account) {
-		this.account = account;
-	}
+  public Account account() {
+    return account;
+  }
 
-	public int amount() {
-		return amount;
-	}
+  private void setAccount(Account account) {
+    this.account = account;
+  }
 
-	private void setAmount(int amount) {
-		this.amount = amount;
-	}
+  public int amount() {
+    return amount;
+  }
 
-    @Override
-	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-			.addValue(account())
-			.addValue(amount())
-			.toString();
-	}
+  private void setAmount(int amount) {
+    this.amount = amount;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (o == null || getClass() != o.getClass()) {
-            return false;
-        }
+  @Override
+  public String toString() {
+    return com.google.common.base.Objects.toStringHelper(this)
+        .addValue(account())
+        .addValue(amount())
+        .toString();
+  }
 
-        Entry typedObject = (Entry) o;
-        return com.google.common.base.Objects.equal(account(), typedObject.account()) &&
-            com.google.common.base.Objects.equal(amount(), typedObject.amount());
+  @Override
+  public boolean equals(Object o) {
+    if (o == null || getClass() != o.getClass()) {
+      return false;
     }
 
-    @Override
-    public int hashCode() {
-        return com.google.common.base.Objects.hashCode(account(), amount());
-    }
+    Entry typedObject = (Entry) o;
+    return com.google.common.base.Objects.equal(account(), typedObject.account()) &&
+           com.google.common.base.Objects.equal(amount(), typedObject.amount());
+  }
+
+  @Override
+  public int hashCode() {
+    return com.google.common.base.Objects.hashCode(account(), amount());
+  }
 }

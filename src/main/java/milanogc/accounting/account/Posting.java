@@ -7,65 +7,66 @@ import java.util.Objects;
 
 // entity
 public class Posting {
-	private PostingId postingId;
-	private Date occurredOn;
-	private ImmutableCollection<Entry> entries;
 
-    public Posting(PostingId postingId, Date ocurredOn, ImmutableCollection<Entry> entries) {
-        setPostingId(postingId);
-        setOcurredOn(ocurredOn);
-        setEntries(entries);
+  private PostingId postingId;
+  private Date occurredOn;
+  private ImmutableCollection<Entry> entries;
+
+  public Posting(PostingId postingId, Date ocurredOn, ImmutableCollection<Entry> entries) {
+    setPostingId(postingId);
+    setOcurredOn(ocurredOn);
+    setEntries(entries);
+  }
+
+  private static boolean isBalanced(ImmutableCollection<Entry> entries) {
+    int sum = 0;
+
+    for (Entry e : entries) {
+      sum += e.amount();
     }
 
-    public PostingId postingId() {
-        return postingId;
+    return sum == 0;
+  }
+
+  public PostingId postingId() {
+    return postingId;
+  }
+
+  private void setPostingId(PostingId postingId) {
+    this.postingId = Objects.requireNonNull(postingId, "The postingId must be provided.");
+  }
+
+  public Date occurredOn() {
+    return occurredOn;
+  }
+
+  private void setOcurredOn(Date ocurredOn) {
+    this.occurredOn = Objects.requireNonNull(ocurredOn, "The occurredOn must be provided.");
+  }
+
+  public ImmutableCollection<Entry> entries() {
+    return entries;
+  }
+
+  private void setEntries(ImmutableCollection<Entry> entries) {
+    if (entries.isEmpty()) {
+      // TODO
     }
 
-    private void setPostingId(PostingId postingId) {
-        this.postingId = Objects.requireNonNull(postingId, "The postingId must be provided.");
+    if (!isBalanced(entries)) {
+      // TODO
     }
 
-    public Date occurredOn() {
-		return occurredOn;
-	}
+    this.entries = entries;
+  }
 
-	private void setOcurredOn(Date ocurredOn) {
-		this.occurredOn = Objects.requireNonNull(ocurredOn, "The occurredOn must be provided.");
-	}
-
-	public ImmutableCollection<Entry> entries() {
-		return entries;
-	}
-
-	private void setEntries(ImmutableCollection<Entry> entries) {
-        if (entries.isEmpty()) {
-            // TODO
-        }
-
-        if (!isBalanced(entries)) {
-            // TODO
-        }
-
-        this.entries = entries;
-	}
-
-    private static boolean isBalanced(ImmutableCollection<Entry> entries) {
-        int sum = 0;
-
-        for (Entry e : entries) {
-            sum += e.amount();
-        }
-
-        return sum == 0;
-    }
-
-    @Override
-	public String toString() {
-		return com.google.common.base.Objects.toStringHelper(this)
-			.addValue(occurredOn())
-			.addValue(entries())
-			.toString();
-	}
+  @Override
+  public String toString() {
+    return com.google.common.base.Objects.toStringHelper(this)
+        .addValue(occurredOn())
+        .addValue(entries())
+        .toString();
+  }
 
     /*public static class Builder {
         private PostingId postingId;
