@@ -1,4 +1,4 @@
-package milanogc.accounting.account;
+package milanogc.accounting.domain.account;
 
 interface AccountRepository {
 

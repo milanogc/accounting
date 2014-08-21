@@ -1,4 +1,4 @@
-package milanogc.accounting.account;
+package milanogc.accounting.domain.account;
 
 // value object
 public class Entry {

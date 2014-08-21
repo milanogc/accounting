@@ -1,4 +1,4 @@
-package milanogc.accounting.account;
+package milanogc.accounting.domain.account;
 
 import java.util.Date;
 import java.util.Objects;

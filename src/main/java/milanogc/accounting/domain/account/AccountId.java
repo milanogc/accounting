@@ -1,13 +1,13 @@
-package milanogc.accounting.account;
+package milanogc.accounting.domain.account;
 
 import java.util.Objects;
 
 // value object
-public class PostingId {
+public class AccountId {
 
   private String id;
 
-  public PostingId(String id) {
+  public AccountId(String id) {
     setId(id);
   }
 
@@ -25,7 +25,7 @@ public class PostingId {
       return false;
     }
 
-    PostingId typedObject = (PostingId) o;
+    AccountId typedObject = (AccountId) o;
     return id().equals(typedObject.id());
   }
 

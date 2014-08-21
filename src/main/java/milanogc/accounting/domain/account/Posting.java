@@ -1,4 +1,4 @@
-package milanogc.accounting.account;
+package milanogc.accounting.domain.account;
 
 import com.google.common.collect.ImmutableCollection;
 
@@ -16,16 +16,6 @@ public class Posting {
     setPostingId(postingId);
     setOcurredOn(ocurredOn);
     setEntries(entries);
-  }
-
-  private static boolean isBalanced(ImmutableCollection<Entry> entries) {
-    int sum = 0;
-
-    for (Entry e : entries) {
-      sum += e.amount();
-    }
-
-    return sum == 0;
   }
 
   public PostingId postingId() {
@@ -58,6 +48,16 @@ public class Posting {
     }
 
     this.entries = entries;
+  }
+
+  private static boolean isBalanced(ImmutableCollection<Entry> entries) {
+    int sum = 0;
+
+    for (Entry e : entries) {
+      sum += e.amount();
+    }
+
+    return sum == 0;
   }
 
   @Override
