@@ -5,6 +5,7 @@ import java.util.Map;
 import java.util.UUID;
 
 class MemAccountRepository implements AccountRepository {
+
   private Map<AccountId, Account> storage = new HashMap<>();
 
   @Override

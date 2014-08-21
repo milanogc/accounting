@@ -12,9 +12,9 @@ public class Posting {
   private Date occurredOn;
   private ImmutableCollection<Entry> entries;
 
-  public Posting(PostingId postingId, Date ocurredOn, ImmutableCollection<Entry> entries) {
+  public Posting(PostingId postingId, Date occurredOn, ImmutableCollection<Entry> entries) {
     setPostingId(postingId);
-    setOcurredOn(ocurredOn);
+    setOccurredOn(occurredOn);
     setEntries(entries);
   }
 
@@ -30,7 +30,7 @@ public class Posting {
     return occurredOn;
   }
 
-  private void setOcurredOn(Date ocurredOn) {
+  private void setOccurredOn(Date ocurredOn) {
     this.occurredOn = Objects.requireNonNull(ocurredOn, "The occurredOn must be provided.");
   }
 
