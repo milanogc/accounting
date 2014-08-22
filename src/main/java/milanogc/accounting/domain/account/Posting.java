@@ -18,6 +18,16 @@ public class Posting {
     setEntries(entries);
   }
 
+  private static boolean isBalanced(ImmutableCollection<Entry> entries) {
+    int sum = 0;
+
+    for (Entry e : entries) {
+      sum += e.amount();
+    }
+
+    return sum == 0;
+  }
+
   public PostingId postingId() {
     return postingId;
   }
@@ -48,16 +58,6 @@ public class Posting {
     }
 
     this.entries = entries;
-  }
-
-  private static boolean isBalanced(ImmutableCollection<Entry> entries) {
-    int sum = 0;
-
-    for (Entry e : entries) {
-      sum += e.amount();
-    }
-
-    return sum == 0;
   }
 
   @Override

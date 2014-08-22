@@ -9,7 +9,7 @@ class MemAccountRepository implements AccountRepository {
   private Map<AccountId, Account> storage = new HashMap<>();
 
   @Override
-  public AccountId nextIdentity() {
+  public AccountId createIdentity() {
     return new AccountId(UUID.randomUUID().toString().toUpperCase());
   }
 

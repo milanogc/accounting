@@ -2,7 +2,7 @@ package milanogc.accounting.domain.account;
 
 interface AccountRepository {
 
-  AccountId nextIdentity();
+  AccountId createIdentity();
 
   Account load(AccountId accountId);
 
