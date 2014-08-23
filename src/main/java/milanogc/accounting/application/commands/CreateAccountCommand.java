@@ -1,8 +1,9 @@
 package milanogc.accounting.application.commands;
 
 import milanogc.accounting.domain.account.AccountId;
+import milanogc.ddd.domain.Command;
 
-public class CreateAccountCommand {
+public class CreateAccountCommand implements Command {
 
   private String name;
   private AccountId parentAccountId;
