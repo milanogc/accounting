@@ -16,7 +16,6 @@ public class AccountService {
   public void createAccount(String name, AccountId parentAccountId, String description) {
     AccountId accountId = accountRepository.createIdentity();
     Account account = new Account(accountId, name, parentAccountId, description);
-    accountRepository.store(account);
-    domainEventPublisher.publish(new AccountCreatedEvent(accountId));
+    domainEventPublisher.publish(new AccountCreatedEvent(account));
   }
 }

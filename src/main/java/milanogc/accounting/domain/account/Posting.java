@@ -1,5 +1,6 @@
 package milanogc.accounting.domain.account;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableCollection;
 
 import java.util.Date;
@@ -40,8 +41,8 @@ public class Posting {
     return occurredOn;
   }
 
-  private void setOccurredOn(Date ocurredOn) {
-    this.occurredOn = Objects.requireNonNull(ocurredOn, "The occurredOn must be provided.");
+  private void setOccurredOn(Date occurredOn) {
+    this.occurredOn = Objects.requireNonNull(occurredOn, "The occurredOn must be provided.");
   }
 
   public ImmutableCollection<Entry> entries() {
@@ -49,14 +50,8 @@ public class Posting {
   }
 
   private void setEntries(ImmutableCollection<Entry> entries) {
-    if (entries.isEmpty()) {
-      // TODO
-    }
-
-    if (!isBalanced(entries)) {
-      // TODO
-    }
-
+    Preconditions.checkArgument(!entries.isEmpty(), "Entries must not be empty.");
+    Preconditions.checkArgument(isBalanced(entries), "Entries must be balanced.");
     this.entries = entries;
   }
 
@@ -67,39 +62,4 @@ public class Posting {
         .addValue(entries())
         .toString();
   }
-
-    /*public static class Builder {
-        private PostingId postingId;
-        private Date occurredOn;
-        private List<Entry> entries = new ArrayList<>();
-
-        public Builder postingId(PostingId postingId) {
-            this.postingId = postingId;
-            return this;
-        }
-
-        public Builder occurredOn(Date occurredOn) {
-            this.occurredOn = occurredOn;
-            return this;
-        }
-
-        public Builder addEntries(Collection<Entry> entries) {
-            this.entries.addAll(Objects.requireNonNull(entries, "The entries must be provided."));
-            return this;
-        }
-
-        public Builder debit(Account account, int amount) {
-            return credit(account, -amount);
-        }
-
-        public Builder credit(Account account, int amount) {
-            Entry entry = new Entry(account, amount);
-            entries.add(entry);
-            return this;
-        }
-
-        public Posting build() {
-            return new Posting(postingId, occurredOn, ImmutableList.copyOf(entries));
-        }
-    }*/
 }
