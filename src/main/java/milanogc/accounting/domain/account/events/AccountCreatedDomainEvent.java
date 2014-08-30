@@ -3,14 +3,14 @@ package milanogc.accounting.domain.account.events;
 import java.util.Date;
 
 import milanogc.accounting.domain.account.Account;
-import milanogc.ddd.domain.Event;
+import milanogc.ddd.domain.DomainEvent;
 
-public class AccountCreatedEvent implements Event {
+public class AccountCreatedDomainEvent implements DomainEvent {
 
   private Date occurredOn = new Date();
   private Account account;
 
-  public AccountCreatedEvent(Account account) {
+  public AccountCreatedDomainEvent(Account account) {
     this.account = account;
   }
 

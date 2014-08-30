@@ -11,20 +11,24 @@ public class Entry {
     setAmount(amount);
   }
 
-  public Account account() {
-    return account;
-  }
-
   private void setAccount(Account account) {
     this.account = account;
   }
 
-  public int amount() {
-    return amount;
+  private void setAmount(int amount) {
+    if (amount == 0) {
+      throw new ZeroAmount();
+    }
+
+    this.amount = amount;
   }
 
-  private void setAmount(int amount) {
-    this.amount = amount;
+  public Account account() {
+    return account;
+  }
+
+  public int amount() {
+    return amount;
   }
 
   @Override
@@ -49,5 +53,8 @@ public class Entry {
   @Override
   public int hashCode() {
     return com.google.common.base.Objects.hashCode(account(), amount());
+  }
+
+  public class ZeroAmount extends RuntimeException {
   }
 }

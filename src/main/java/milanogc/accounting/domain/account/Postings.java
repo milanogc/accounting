@@ -1,6 +1,6 @@
 package milanogc.accounting.domain.account;
 
-interface PostingRepository {
+interface Postings {
 
   PostingId nextIdentity();
 

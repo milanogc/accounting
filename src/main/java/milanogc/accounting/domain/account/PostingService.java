@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class PostingService {
 
-  private PostingRepository postingRepository;
+  private Postings postings;
 
   public void post(Date occurredOn, ImmutableCollection<Entry> entries) {
-    new Posting(postingRepository.nextIdentity(), occurredOn, entries);
+    new Posting(postings.nextIdentity(), occurredOn, entries);
   }
 }

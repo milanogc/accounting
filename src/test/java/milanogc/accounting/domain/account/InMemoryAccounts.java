@@ -4,7 +4,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
-class MemAccountRepository implements AccountRepository {
+class InMemoryAccounts implements Accounts {
 
   private Map<AccountId, Account> storage = new HashMap<>();
 

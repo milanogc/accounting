@@ -1,6 +1,5 @@
 package milanogc.accounting.domain.account;
 
-import com.google.common.base.Preconditions;
 import com.google.common.collect.ImmutableCollection;
 
 import java.util.Date;
@@ -19,6 +18,22 @@ public class Posting {
     setEntries(entries);
   }
 
+  private void setPostingId(PostingId postingId) {
+    this.postingId = Objects.requireNonNull(postingId, "The postingId must be provided.");
+  }
+
+  private void setOccurredOn(Date occurredOn) {
+    this.occurredOn = Objects.requireNonNull(occurredOn, "The occurredOn must be provided.");
+  }
+
+  private void setEntries(ImmutableCollection<Entry> entries) {
+    if (!isBalanced(entries)) {
+      throw new NotBalancedEntries();
+    }
+
+    this.entries = entries;
+  }
+
   private static boolean isBalanced(ImmutableCollection<Entry> entries) {
     int sum = 0;
 
@@ -33,26 +48,12 @@ public class Posting {
     return postingId;
   }
 
-  private void setPostingId(PostingId postingId) {
-    this.postingId = Objects.requireNonNull(postingId, "The postingId must be provided.");
-  }
-
   public Date occurredOn() {
     return occurredOn;
   }
 
-  private void setOccurredOn(Date occurredOn) {
-    this.occurredOn = Objects.requireNonNull(occurredOn, "The occurredOn must be provided.");
-  }
-
   public ImmutableCollection<Entry> entries() {
     return entries;
-  }
-
-  private void setEntries(ImmutableCollection<Entry> entries) {
-    Preconditions.checkArgument(!entries.isEmpty(), "Entries must not be empty.");
-    Preconditions.checkArgument(isBalanced(entries), "Entries must be balanced.");
-    this.entries = entries;
   }
 
   @Override
@@ -61,5 +62,8 @@ public class Posting {
         .addValue(occurredOn())
         .addValue(entries())
         .toString();
+  }
+
+  public class NotBalancedEntries extends RuntimeException {
   }
 }
