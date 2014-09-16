@@ -12,11 +12,12 @@ public class Account {
   private String description;
   private Date createdOn = new Date();
 
-  public Account(AccountId accountId, String name, AccountId parentAccountId, String description) {
+  public Account(AccountId accountId, String name, AccountId parentAccountId, String description, Date createdOn) {
     setAccountId(accountId);
     setName(name);
     setParentAccountId(parentAccountId);
     setDescription(description);
+    setCreatedOn(createdOn);
   }
 
   public AccountId accountId() {
@@ -24,7 +25,7 @@ public class Account {
   }
 
   private void setAccountId(AccountId accountId) {
-    this.accountId = Objects.requireNonNull(accountId, "The accountId must be provided.");
+    this.accountId = Objects.requireNonNull(accountId);
   }
 
   public AccountId parentAccountId() {
@@ -40,7 +41,7 @@ public class Account {
   }
 
   private void setName(String name) {
-    this.name = Objects.requireNonNull(name, "The name must be provided.");
+    this.name = Objects.requireNonNull(name);
   }
 
   public String description() {
@@ -53,6 +54,10 @@ public class Account {
 
   public Date createdOn() {
     return createdOn;
+  }
+
+  private void setCreatedOn(Date createdOn) {
+    this.createdOn = Objects.requireNonNull(createdOn);
   }
 
   @Override

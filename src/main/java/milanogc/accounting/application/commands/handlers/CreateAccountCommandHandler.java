@@ -12,6 +12,6 @@ public class CreateAccountCommandHandler {
   }
 
   public void handle(CreateAccountCommand command) {
-    accountService.createAccount(command.name(), command.parentAccountId(), command.description());
+    accountService.createAccount(command.name(), command.parentAccountId(), command.description(), command.createdOn());
   }
 }

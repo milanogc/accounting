@@ -8,7 +8,7 @@ import java.util.Date;
 
 public class PostingTest {
 
-  private Account account = new Account(new AccountId(""), "", null, null);
+  private Account account = new Account(new AccountId(""), "", null, null, new Date());
 
   @Test
   public void createPosting() {
