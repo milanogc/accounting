@@ -1,5 +1,9 @@
 package milanogc.accounting.domain.account;
 
+import com.google.common.base.MoreObjects;
+
+import java.util.Objects;
+
 // value object
 public class Entry {
 
@@ -33,7 +37,7 @@ public class Entry {
 
   @Override
   public String toString() {
-    return com.google.common.base.Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .addValue(account())
         .addValue(amount())
         .toString();
@@ -46,13 +50,13 @@ public class Entry {
     }
 
     Entry typedObject = (Entry) o;
-    return com.google.common.base.Objects.equal(account(), typedObject.account()) &&
-           com.google.common.base.Objects.equal(amount(), typedObject.amount());
+    return Objects.equals(account(), typedObject.account()) &&
+           Objects.equals(amount(), typedObject.amount());
   }
 
   @Override
   public int hashCode() {
-    return com.google.common.base.Objects.hashCode(account(), amount());
+    return Objects.hash(account(), amount());
   }
 
   public class ZeroAmount extends RuntimeException {

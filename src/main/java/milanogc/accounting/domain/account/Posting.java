@@ -1,5 +1,6 @@
 package milanogc.accounting.domain.account;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableCollection;
 
 import java.util.Date;
@@ -58,7 +59,7 @@ public class Posting {
 
   @Override
   public String toString() {
-    return com.google.common.base.Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .addValue(occurredOn())
         .addValue(entries())
         .toString();

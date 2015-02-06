@@ -1,14 +1,13 @@
 package milanogc.accounting.domain.account;
 
 import com.google.common.collect.ImmutableSet;
-
 import org.junit.Test;
 
 import java.util.Date;
 
 public class PostingTest {
 
-  private Account account = new Account(new AccountId(""), "", null, null, new Date());
+  private Account account = new Account(new AccountId(""), "", new Date(), null, null);
 
   @Test
   public void createPosting() {

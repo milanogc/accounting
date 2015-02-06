@@ -9,6 +9,6 @@ public class PostingService {
   private Postings postings;
 
   public void post(Date occurredOn, ImmutableCollection<Entry> entries) {
-    new Posting(postings.nextIdentity(), occurredOn, entries);
+    postings.store(new Posting(postings.nextIdentity(), occurredOn, entries));
   }
 }

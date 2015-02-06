@@ -1,5 +1,7 @@
 package milanogc.accounting.domain.account;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.Date;
 import java.util.Objects;
 
@@ -12,12 +14,13 @@ public class Account {
   private String description;
   private Date createdOn = new Date();
 
-  public Account(AccountId accountId, String name, AccountId parentAccountId, String description, Date createdOn) {
+  public Account(AccountId accountId, String name, Date createdOn, String description,
+                 AccountId parentAccountId) {
     setAccountId(accountId);
     setName(name);
-    setParentAccountId(parentAccountId);
-    setDescription(description);
     setCreatedOn(createdOn);
+    setDescription(description);
+    setParentAccountId(parentAccountId);
   }
 
   public AccountId accountId() {
@@ -62,9 +65,38 @@ public class Account {
 
   @Override
   public String toString() {
-    return com.google.common.base.Objects.toStringHelper(this)
+    return MoreObjects.toStringHelper(this)
         .addValue(accountId())
         .addValue(name())
         .toString();
+  }
+
+  public static class Builder {
+
+    private AccountId accountId;
+    private String name;
+    private AccountId parentAccountId;
+    private String description;
+    private Date createdOn;
+
+    public Builder(AccountId accountId, String name, Date createdOn) {
+      this.accountId = accountId;
+      this.name = name;
+      this.createdOn = createdOn;
+    }
+
+    public Builder parentAccountId(AccountId parentAccountId) {
+      this.parentAccountId = parentAccountId;
+      return this;
+    }
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Account build() {
+      return new Account(accountId, name, createdOn, description, parentAccountId);
+    }
   }
 }

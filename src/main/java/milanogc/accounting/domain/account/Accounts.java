@@ -1,5 +1,6 @@
 package milanogc.accounting.domain.account;
 
+// repository
 interface Accounts {
 
   AccountId createIdentity();

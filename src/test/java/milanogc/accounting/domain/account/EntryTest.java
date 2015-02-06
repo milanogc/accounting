@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class EntryTest {
 
-  private Account account = new Account(new AccountId(""), "", null, null, new Date());
+  private Account account = new Account(new AccountId(""), "", new Date(), null, null);
 
   @Test(expected = Entry.ZeroAmount.class)
   public void entryWithAmountOfZero_ShouldThrowZeroAmount() {
