@@ -1,9 +1,10 @@
 package milanogc.accounting.domain.account.events;
 
-import java.util.Date;
-
 import milanogc.accounting.domain.account.Account;
 import milanogc.ddd.domain.DomainEvent;
+
+import java.util.Date;
+import java.util.Objects;
 
 public class AccountCreatedDomainEvent implements DomainEvent {
 
@@ -11,7 +12,7 @@ public class AccountCreatedDomainEvent implements DomainEvent {
   private Account account;
 
   public AccountCreatedDomainEvent(Account account) {
-    this.account = account;
+    this.account = Objects.requireNonNull(account, "The account must be provided.");;
   }
 
   public Account account() {
@@ -20,6 +21,6 @@ public class AccountCreatedDomainEvent implements DomainEvent {
 
   @Override
   public Date occurredOn() {
-    return occurredOn;
+    return new Date(occurredOn.getTime());
   }
 }

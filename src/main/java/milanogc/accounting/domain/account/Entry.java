@@ -8,7 +8,7 @@ import java.util.Objects;
 public class Entry {
 
   private Account account;
-  private Integer amount;
+  private int amount;
 
   public Entry(Account account, int amount) {
     setAccount(account);
@@ -16,7 +16,7 @@ public class Entry {
   }
 
   private void setAccount(Account account) {
-    this.account = account;
+    this.account = Objects.requireNonNull(account);
   }
 
   private void setAmount(int amount) {

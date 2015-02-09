@@ -24,7 +24,7 @@ public class Posting {
   }
 
   private void setOccurredOn(Date occurredOn) {
-    this.occurredOn = Objects.requireNonNull(occurredOn, "The occurredOn must be provided.");
+    this.occurredOn = new Date(Objects.requireNonNull(occurredOn, "The occurredOn must be provided.").getTime());
   }
 
   private void setEntries(ImmutableCollection<Entry> entries) {
@@ -50,7 +50,7 @@ public class Posting {
   }
 
   public Date occurredOn() {
-    return occurredOn;
+    return new Date(occurredOn.getTime());
   }
 
   public ImmutableCollection<Entry> entries() {

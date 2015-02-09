@@ -56,11 +56,11 @@ public class Account {
   }
 
   public Date createdOn() {
-    return createdOn;
+    return new Date(createdOn.getTime());
   }
 
   private void setCreatedOn(Date createdOn) {
-    this.createdOn = Objects.requireNonNull(createdOn);
+    this.createdOn = new Date(Objects.requireNonNull(createdOn).getTime());
   }
 
   @Override
@@ -82,7 +82,7 @@ public class Account {
     public Builder(AccountId accountId, String name, Date createdOn) {
       this.accountId = accountId;
       this.name = name;
-      this.createdOn = createdOn;
+      this.createdOn = new Date(createdOn.getTime());
     }
 
     public Builder parentAccountId(AccountId parentAccountId) {
