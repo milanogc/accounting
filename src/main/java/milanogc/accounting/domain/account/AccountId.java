@@ -1,5 +1,7 @@
 package milanogc.accounting.domain.account;
 
+import com.google.common.base.MoreObjects;
+
 import java.util.Objects;
 
 // value object
@@ -32,5 +34,12 @@ public class AccountId {
   @Override
   public int hashCode() {
     return id().hashCode();
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .addValue(id())
+        .toString();
   }
 }

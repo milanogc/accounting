@@ -21,7 +21,7 @@ import java.util.List;
 
 public class DomainEventPublisher {
 
-  private static final ThreadLocal<DomainEventPublisher> instance = new ThreadLocal<DomainEventPublisher>() {
+  private static final ThreadLocal<DomainEventPublisher> INSTANCE = new ThreadLocal<DomainEventPublisher>() {
     protected DomainEventPublisher initialValue() {
       return new DomainEventPublisher();
     }
@@ -33,15 +33,13 @@ public class DomainEventPublisher {
   private List subscribers;
 
   public static DomainEventPublisher instance() {
-    return instance.get();
+    return INSTANCE.get();
   }
 
   public <T> void publish(final T aDomainEvent) {
     if (!this.isPublishing() && this.hasSubscribers()) {
-
       try {
         this.setPublishing(true);
-
         Class<?> eventType = aDomainEvent.getClass();
 
         @SuppressWarnings("unchecked")
@@ -77,14 +75,12 @@ public class DomainEventPublisher {
   public <T> void subscribe(DomainEventSubscriber<T> aSubscriber) {
     if (!this.isPublishing()) {
       this.ensureSubscribersList();
-
       this.subscribers().add(aSubscriber);
     }
   }
 
   private DomainEventPublisher() {
     super();
-
     this.setPublishing(false);
     this.ensureSubscribersList();
   }
