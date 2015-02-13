@@ -28,6 +28,10 @@ public class Posting {
   }
 
   private void setEntries(ImmutableCollection<Entry> entries) {
+    if (entries.isEmpty()) {
+      throw new EmptyEntries();
+    }
+
     if (!isBalanced(entries)) {
       throw new NotBalancedEntries();
     }
@@ -65,6 +69,7 @@ public class Posting {
         .toString();
   }
 
-  public class NotBalancedEntries extends RuntimeException {
-  }
+  public class EmptyEntries extends RuntimeException {}
+
+  public class NotBalancedEntries extends RuntimeException {}
 }
