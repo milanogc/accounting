@@ -12,11 +12,17 @@ public class Posting {
   private PostingId postingId;
   private Date occurredOn;
   private ImmutableCollection<Entry> entries;
+  private String description;
 
-  public Posting(PostingId postingId, Date occurredOn, ImmutableCollection<Entry> entries) {
+  public Posting(PostingId postingId, Date occurredOn, ImmutableCollection<Entry> entries, String description) {
     setPostingId(postingId);
     setOccurredOn(occurredOn);
     setEntries(entries);
+    setDescription(description);
+  }
+
+  public Posting(PostingId postingId, Date occurredOn, ImmutableCollection<Entry> entries) {
+    this(postingId, occurredOn, entries, null);
   }
 
   private void setPostingId(PostingId postingId) {
@@ -49,6 +55,10 @@ public class Posting {
     return sum == 0;
   }
 
+  private void setDescription(String description) {
+    this.description = description;
+  }
+
   public PostingId postingId() {
     return postingId;
   }
@@ -61,11 +71,17 @@ public class Posting {
     return entries;
   }
 
+  public String description() {
+    return description;
+  }
+
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
+        .addValue(postingId())
         .addValue(occurredOn())
         .addValue(entries())
+        .addValue(description())
         .toString();
   }
 
