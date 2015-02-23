@@ -7,16 +7,16 @@ import java.util.Objects;
 // value object
 public class Entry {
 
-  private Account account;
+  private AccountId accountId;
   private int amount;
 
-  public Entry(Account account, int amount) {
-    setAccount(account);
+  public Entry(AccountId accountId, int amount) {
+    setAccountId(accountId);
     setAmount(amount);
   }
 
-  private void setAccount(Account account) {
-    this.account = Objects.requireNonNull(account);
+  private void setAccountId(AccountId accountId) {
+    this.accountId = Objects.requireNonNull(accountId);
   }
 
   private void setAmount(int amount) {
@@ -27,8 +27,8 @@ public class Entry {
     this.amount = amount;
   }
 
-  public Account account() {
-    return account;
+  public AccountId account() {
+    return accountId;
   }
 
   public int amount() {

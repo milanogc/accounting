@@ -11,12 +11,12 @@ public class EntryTest {
 
   @Test(expected = Entry.ZeroAmount.class)
   public void entryWithAmountOfZero_ShouldThrowZeroAmount() {
-    new Entry(account, 0);
+    new Entry(account.accountId(), 0);
   }
 
   @Test
   public void entryWithAmountOfOne() {
-    Entry entry = new Entry(account, 1);
+    Entry entry = new Entry(account.accountId(), 1);
     Assert.assertEquals(entry.amount(), 1);
   }
 }

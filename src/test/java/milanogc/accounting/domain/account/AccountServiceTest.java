@@ -34,7 +34,7 @@ public class AccountServiceTest {
 
     Accounts accounts = new InMemoryAccounts();
     AccountService accountService = new AccountService(accounts);
-    accountService.createAccount("ASSET", null, "", new Date());
+    accountService.createAccount("ASSET", new Date(), "", null);
     Assert.assertEquals(accountCreatedFlag[0], true);
   }
 }

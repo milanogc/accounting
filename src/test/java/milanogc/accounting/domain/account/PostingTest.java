@@ -9,7 +9,7 @@ import java.util.Date;
 
 public class PostingTest {
 
-  private Account account = new Account.Builder(new AccountId(""), "ASSET", new Date()).build();
+  private AccountId accountId = new AccountId("");
 
   @Test(expected = Posting.EmptyEntries.class)
   public void postingWithoutEntries_ShouldThrowEmptyEntries() {
@@ -18,17 +18,17 @@ public class PostingTest {
 
   @Test(expected = Posting.NotBalancedEntries.class)
   public void postingOfOneEntry_ShouldThrowNotBalancedEntries() {
-    createPosting(ImmutableSet.of(new Entry(account, 1)));
+    createPosting(ImmutableSet.of(new Entry(accountId, 1)));
   }
 
   @Test(expected = Posting.NotBalancedEntries.class)
   public void postingOfTwoUnbalancedEntries_ShouldThrowNotBalancedEntries() {
-    createPosting(ImmutableSet.of(new Entry(account, 1), new Entry(account, 1)));
+    createPosting(ImmutableSet.of(new Entry(accountId, 1), new Entry(accountId, 1)));
   }
 
   @Test
   public void postingOfTwoBalancedEntries() {
-    createPosting(ImmutableSet.of(new Entry(account, 1), new Entry(account, -1)));
+    createPosting(ImmutableSet.of(new Entry(accountId, 1), new Entry(accountId, -1)));
   }
 
   private void createPosting(ImmutableCollection<Entry> entries) {

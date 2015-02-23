@@ -1,11 +1,10 @@
-package milanogc.accounting.application.commands;
+package milanogc.accounting.application.account;
 
 import java.util.Date;
 
 import milanogc.accounting.domain.account.AccountId;
-import milanogc.ddd.domain.Command;
 
-public class CreateAccountCommand implements Command {
+public class CreateAccountCommand {
 
   private String name;
   private AccountId parentAccountId;
