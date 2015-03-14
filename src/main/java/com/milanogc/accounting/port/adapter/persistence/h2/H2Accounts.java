@@ -1,12 +1,14 @@
 package com.milanogc.accounting.port.adapter.persistence.h2;
 
+import com.google.common.collect.ImmutableMap;
+
 import com.milanogc.accounting.domain.account.Account;
 import com.milanogc.accounting.domain.account.AccountId;
 import com.milanogc.accounting.domain.account.Accounts;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -14,18 +16,27 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.Map;
 import java.util.UUID;
 
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
 public class H2Accounts implements Accounts {
 
-  private final JdbcTemplate jdbcTemplate;
+  private static final String INSERT_ACCOUNT = "INSERT INTO ACCOUNT (ID, NAME, CREATED_ON, "
+    + "DESCRIPTION, PARENT_ACCOUNT_ID) VALUES (?, ?, ?, ?, ?)";
+  private static final String INSERT_SELF_CLOSURE = "INSERT INTO ACCOUNT_CLOSURE "
+    + "(ANCESTOR_ACCOUNT_ID, DESCENDANT_ACCOUNT_ID) VALUES (:ACCOUNT, :ACCOUNT)";
+  private static final String INSERT_OTHERS_CLOSURES  = "INSERT INTO ACCOUNT_CLOSURE "
+    + "(ANCESTOR_ACCOUNT_ID, DESCENDANT_ACCOUNT_ID) SELECT ANCESTOR_ACCOUNT_ID, :DESCENDANT FROM "
+    + "ACCOUNT_CLOSURE WHERE DESCENDANT_ACCOUNT_ID = :ANCESTOR";
+
+  private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
   @Autowired
-  public H2Accounts(JdbcTemplate jdbcTemplate) {
+  public H2Accounts(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
     super();
-    this.jdbcTemplate = jdbcTemplate;
+    this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
   }
 
   @Override
@@ -35,18 +46,28 @@ public class H2Accounts implements Accounts {
 
   @Override
   public Account load(AccountId accountId) {
-    String sql = "SELECT * FROM ACCOUNT WHERE ID = ?";
-    return (Account) jdbcTemplate.queryForObject(sql, new CustomerRowMapper(), accountId.id());
+    return (Account) namedParameterJdbcTemplate.getJdbcOperations().queryForObject(
+      "SELECT * FROM ACCOUNT WHERE ID = ?", new CustomerRowMapper(), accountId.id());
   }
 
   @Override
   public void store(Account account) {
-    jdbcTemplate
-        .update("INSERT INTO ACCOUNT (ID, NAME, CREATED_ON, DESCRIPTION, PARENT_ACCOUNT_ID)"
-                + "VALUES (?, ?, ?, ?, ?)",
-                account.accountId().id(), account.name(), account.createdOn(),
-                account.description(),
-                account.parentAccountId() != null ? account.parentAccountId().id() : null);
+    String parentAccountId = getRawAccountId(account.parentAccountId());
+    namedParameterJdbcTemplate.getJdbcOperations().update(INSERT_ACCOUNT, account.accountId().id(),
+      account.name(), account.createdOn(), account.description(), parentAccountId);
+    Map<String, Object> insertSelfClosureParameters = ImmutableMap.of("ACCOUNT",
+      account.accountId().id());
+    namedParameterJdbcTemplate.update(INSERT_SELF_CLOSURE, insertSelfClosureParameters);
+
+    if (parentAccountId != null) {
+      Map<String, Object> insertOtherClosuresParameters = ImmutableMap.of(
+        "DESCENDANT", account.accountId().id(), "ANCESTOR", parentAccountId);
+      namedParameterJdbcTemplate.update(INSERT_OTHERS_CLOSURES, insertOtherClosuresParameters);
+    }
+  }
+
+  private String getRawAccountId(AccountId accountId) {
+    return accountId != null ? accountId.id() : null;
   }
 
   private static class CustomerRowMapper implements RowMapper {
@@ -59,7 +80,7 @@ public class H2Accounts implements Accounts {
       String possibleParentAccountId = rs.getString("PARENT_ACCOUNT_ID");
 
       Account.Builder accountBuilder = new Account.Builder(accountId, name, createdOn)
-          .description(description);
+        .description(description);
 
       if (possibleParentAccountId != null) {
         AccountId parentAccountId = new AccountId(possibleParentAccountId);

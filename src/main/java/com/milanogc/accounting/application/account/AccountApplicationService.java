@@ -19,9 +19,8 @@ public class AccountApplicationService {
   }
 
   @Transactional
-  public void createAccount(CreateAccountCommand command) {
-    new AccountService(accounts)
-        .createAccount(command.name(), command.createdOn(), command.description(),
-                       command.parentAccountId());
+  public String createAccount(CreateAccountCommand command) {
+    return new AccountService(accounts).createAccount(command.name(), command.createdOn(),
+      command.description(), command.parentAccountId()).id();
   }
 }

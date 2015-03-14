@@ -5,15 +5,17 @@ import com.google.common.collect.ImmutableSet;
 import com.milanogc.accounting.domain.account.AccountId;
 import com.milanogc.accounting.domain.account.Amount;
 import com.milanogc.accounting.domain.account.Entry;
+import com.milanogc.accounting.domain.account.PostingId;
 import com.milanogc.accounting.domain.account.PostingService;
 import com.milanogc.accounting.domain.account.Postings;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-//@Service
+@Service
 public class PostingApplicationService {
 
   private Postings postings;
@@ -24,10 +26,12 @@ public class PostingApplicationService {
     this.postings = postings;
   }
 
-  public void post(PostCommand command) {
+  public String post(PostCommand command) {
     List<Entry> entries = command.entries().stream()
-        .map(ec -> new Entry(new AccountId(ec.accountId()), new Amount(ec.amount())))
-        .collect(Collectors.toList());
-    new PostingService(postings).post(command.occurredOn(), ImmutableSet.copyOf(entries));
+      .map(ec -> new Entry(new AccountId(ec.accountId()), new Amount(ec.amount())))
+      .collect(Collectors.toList());
+    PostingId postingId = new PostingService(postings).post(command.occurredOn(),
+      ImmutableSet.copyOf(entries));
+    return postingId.id();
   }
 }

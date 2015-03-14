@@ -13,7 +13,9 @@ public class PostingService {
     this.postings = postings;
   }
 
-  public void post(Date occurredOn, ImmutableCollection<Entry> entries) {
-    postings.store(new Posting(postings.nextIdentity(), occurredOn, entries));
+  public PostingId post(Date occurredOn, ImmutableCollection<Entry> entries) {
+    PostingId postingId = postings.nextIdentity();
+    postings.store(new Posting(postingId, occurredOn, entries));
+    return postingId;
   }
 }

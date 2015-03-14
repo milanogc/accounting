@@ -42,11 +42,6 @@
             <artifactId>guava</artifactId>
             <version>18.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.joda</groupId>
-            <artifactId>joda-money</artifactId>
-            <version>0.10.0</version>
-        </dependency>
          <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -67,11 +62,6 @@
         </dependency>
 
         <!-- com.milanogc.accounting.port.adapter.port.adapter.console -->
-        <dependency>
-            <groupId>com.beust</groupId>
-            <artifactId>jcommander</artifactId>
-            <version>1.30</version>
-        </dependency>
 
         <!-- com.milanogc.accounting.port.adapter.persistence.h2 -->
         <dependency>

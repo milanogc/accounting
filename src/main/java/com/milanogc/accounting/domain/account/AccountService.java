@@ -14,11 +14,12 @@ public class AccountService {
     this.accounts = accounts;
   }
 
-  public void createAccount(String name, Date createdOn, String description,
+  public AccountId createAccount(String name, Date createdOn, String description,
                             AccountId parentAccountId) {
     AccountId newAccountId = accounts.nextIdentity();
     Account newAccount = new Account(newAccountId, name, createdOn, description, parentAccountId);
     accounts.store(newAccount);
     DomainEventPublisher.instance().publish(new AccountCreatedDomainEvent(newAccount));
+    return newAccountId;
   }
 }

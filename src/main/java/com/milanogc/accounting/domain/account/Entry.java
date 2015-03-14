@@ -42,9 +42,9 @@ public class Entry {
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-        .addValue(account())
-        .addValue(amount())
-        .toString();
+      .addValue(account())
+      .addValue(amount())
+      .toString();
   }
 
   @Override
@@ -55,7 +55,7 @@ public class Entry {
 
     Entry typedObject = (Entry) o;
     return Objects.equals(account(), typedObject.account()) &&
-           Objects.equals(amount(), typedObject.amount());
+      Objects.equals(amount(), typedObject.amount());
   }
 
   @Override
@@ -63,7 +63,5 @@ public class Entry {
     return Objects.hash(account(), amount());
   }
 
-  public class ZeroAmount extends RuntimeException {
-
-  }
+  public class ZeroAmount extends RuntimeException {}
 }
