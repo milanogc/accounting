@@ -1,5 +1,8 @@
 package com.milanogc.accounting.port.adapter.ui.web;
 
+import com.google.common.base.CaseFormat;
+import com.google.common.collect.ImmutableMap;
+
 import com.milanogc.accounting.readmodel.finder.h2.H2AccountFinder;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,8 +14,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 @RestController
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
@@ -24,8 +29,23 @@ public class AccountingController {
 
   @RequestMapping("/")
   @ResponseBody
-  public List<Map<String, Object>> index() {
-    return accountFinder.allAccounts();
+  public Map<String, List<Map<String, Object>>> index() {
+    List<Map<String, Object>> allAccounts = accountFinder.allAccounts().stream()
+        .map(AccountingController::convertKeyFromConstantCaseToCamelCase)
+        .collect(Collectors.toList());
+
+    return ImmutableMap.of("accounts", allAccounts);
+  }
+
+  private static Map<String, Object> convertKeyFromConstantCaseToCamelCase(Map<String, Object> originalMap) {
+    Map<String, Object> newMap = new LinkedHashMap<>();
+
+    for (Map.Entry<String, Object> a : originalMap.entrySet()) {
+      String newKey = CaseFormat.UPPER_UNDERSCORE.to(CaseFormat.LOWER_CAMEL, a.getKey());
+      newMap.put(newKey, a.getValue());
+    }
+
+    return newMap;
   }
 
   public static void main(String[] args) {
