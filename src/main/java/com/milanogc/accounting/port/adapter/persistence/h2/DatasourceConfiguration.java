@@ -29,9 +29,9 @@ public class DatasourceConfiguration {
       @Value("${accounting.datasource.password}") String password) {
     DriverManagerDataSource dataSource = new DriverManagerDataSource();
     dataSource.setDriverClassName(driverClassName);
-    dataSource.setUrl("jdbc:h2:file:/home/milano/accounting"/*url*/);
-    dataSource.setUsername("sa"/*username*/);
-    dataSource.setPassword(""/*password*/);
+    dataSource.setUrl(url);
+    dataSource.setUsername(username);
+    dataSource.setPassword(password);
     return dataSource;
   }
 }
