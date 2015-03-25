@@ -15,6 +15,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <spring.version>4.1.5.RELEASE</spring.version>
+        <tomcat.version>8.0.20</tomcat.version>
     </properties>
 
     <build>
@@ -31,11 +33,49 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <configuration>
+                    <mainClass>com.milanogc.accounting.port.adapter.ui.web.AccountingController</mainClass>
+                    <layout>ZIP</layout>
+                </configuration>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+            <!-- com.milanogc.accounting.port.adapter.persistence.h2 -->
+            <plugin>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>3.2</version>
+                <configuration>
+                    <url>jdbc:h2:file:/home/milano/accounting;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</url>
+                    <user>sa</user>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>com.h2database</groupId>
+                        <artifactId>h2</artifactId>
+                        <version>1.4.186</version>
+                    </dependency>
+                </dependencies>
             </plugin>
         </plugins>
     </build>
 
     <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
         <!-- com.milanogc.accounting.domain.account -->
         <dependency>
             <groupId>com.google.guava</groupId>
@@ -50,28 +90,27 @@
         </dependency>
 
         <!-- com.milanogc.accounting.application.account -->
-        <!-- com.milanogc.accounting.port.adapter.port.adapter.console -->
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-            <scope>test</scope>
-        </dependency>
+        <!-- com.milanogc.accounting.port.adapter.port.adapter.ui.console -->
 
-        <!-- com.milanogc.accounting.port.adapter.port.adapter.console -->
+        <!-- com.milanogc.accounting.port.adapter.port.adapter.ui.web -->
+        <!--<dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>-->
+
+        <!-- com.milanogc.accounting.port.adapter.port.adapter.ui.console -->
 
         <!-- com.milanogc.accounting.port.adapter.persistence.h2 -->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
+            <version>${spring.version}</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.186</version>
+            <scope>runtime</scope>
         </dependency>
     </dependencies>
 </project>

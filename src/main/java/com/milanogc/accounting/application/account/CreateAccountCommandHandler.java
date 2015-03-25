@@ -12,7 +12,7 @@ public class CreateAccountCommandHandler {
   }
 
   public void handle(CreateAccountCommand command) {
-    accountService.createAccount(command.name(), command.createdOn(), command.description(),
-                                 command.parentAccountId());
+    this.accountService.createAccount(command.name(), command.createdOn(), command.description(),
+        command.parentAccountId());
   }
 }

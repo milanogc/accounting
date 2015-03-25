@@ -30,7 +30,7 @@ public class PostingApplicationService {
     List<Entry> entries = command.entries().stream()
       .map(ec -> new Entry(new AccountId(ec.accountId()), new Amount(ec.amount())))
       .collect(Collectors.toList());
-    PostingId postingId = new PostingService(postings).post(command.occurredOn(),
+    PostingId postingId = new PostingService(this.postings).post(command.occurredOn(),
       ImmutableSet.copyOf(entries));
     return postingId.id();
   }

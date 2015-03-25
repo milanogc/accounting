@@ -46,27 +46,28 @@ public class H2Accounts implements Accounts {
 
   @Override
   public Account load(AccountId accountId) {
-    return (Account) namedParameterJdbcTemplate.getJdbcOperations().queryForObject(
+    return (Account) this.namedParameterJdbcTemplate.getJdbcOperations().queryForObject(
       "SELECT * FROM ACCOUNT WHERE ID = ?", new CustomerRowMapper(), accountId.id());
   }
 
   @Override
   public void store(Account account) {
     String parentAccountId = getRawAccountId(account.parentAccountId());
-    namedParameterJdbcTemplate.getJdbcOperations().update(INSERT_ACCOUNT, account.accountId().id(),
-      account.name(), account.createdOn(), account.description(), parentAccountId);
+    this.namedParameterJdbcTemplate.getJdbcOperations().update(INSERT_ACCOUNT,
+        account.accountId().id(), account.name(), account.createdOn(), account.description(),
+        parentAccountId);
     Map<String, Object> insertSelfClosureParameters = ImmutableMap.of("ACCOUNT",
-      account.accountId().id());
-    namedParameterJdbcTemplate.update(INSERT_SELF_CLOSURE, insertSelfClosureParameters);
+        account.accountId().id());
+    this.namedParameterJdbcTemplate.update(INSERT_SELF_CLOSURE, insertSelfClosureParameters);
 
     if (parentAccountId != null) {
       Map<String, Object> insertOtherClosuresParameters = ImmutableMap.of(
-        "DESCENDANT", account.accountId().id(), "ANCESTOR", parentAccountId);
-      namedParameterJdbcTemplate.update(INSERT_OTHERS_CLOSURES, insertOtherClosuresParameters);
+          "DESCENDANT", account.accountId().id(), "ANCESTOR", parentAccountId);
+      this.namedParameterJdbcTemplate.update(INSERT_OTHERS_CLOSURES, insertOtherClosuresParameters);
     }
   }
 
-  private String getRawAccountId(AccountId accountId) {
+  private static String getRawAccountId(AccountId accountId) {
     return accountId != null ? accountId.id() : null;
   }
 
@@ -78,9 +79,8 @@ public class H2Accounts implements Accounts {
       Date createdOn = rs.getDate("CREATED_ON");
       String description = rs.getString("DESCRIPTION");
       String possibleParentAccountId = rs.getString("PARENT_ACCOUNT_ID");
-
       Account.Builder accountBuilder = new Account.Builder(accountId, name, createdOn)
-        .description(description);
+          .description(description);
 
       if (possibleParentAccountId != null) {
         AccountId parentAccountId = new AccountId(possibleParentAccountId);

@@ -13,7 +13,7 @@ public class PostingId {
   }
 
   public String id() {
-    return id;
+    return this.id;
   }
 
   private void setId(String id) {
@@ -27,11 +27,11 @@ public class PostingId {
     }
 
     PostingId typedObject = (PostingId) o;
-    return id().equals(typedObject.id());
+    return this.id().equals(typedObject.id());
   }
 
   @Override
   public int hashCode() {
-    return id().hashCode();
+    return this.id().hashCode();
   }
 }

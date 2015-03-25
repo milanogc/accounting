@@ -15,7 +15,7 @@ public class Posting {
   private String description;
 
   public Posting(PostingId postingId, Date occurredOn, ImmutableCollection<Entry> entries,
-                 String description) {
+      String description) {
     super();
     setPostingId(postingId);
     setOccurredOn(occurredOn);
@@ -37,8 +37,8 @@ public class Posting {
   }
 
   private void setOccurredOn(Date occurredOn) {
-    this.occurredOn =
-        new Date(Objects.requireNonNull(occurredOn, "The occurredOn must be provided.").getTime());
+    this.occurredOn = new Date(Objects.requireNonNull(occurredOn,
+        "The occurredOn must be provided.").getTime());
   }
 
   private void setEntries(ImmutableCollection<Entry> entries) {
@@ -64,36 +64,32 @@ public class Posting {
   }
 
   public PostingId postingId() {
-    return postingId;
+    return this.postingId;
   }
 
   public Date occurredOn() {
-    return new Date(occurredOn.getTime());
+    return new Date(this.occurredOn.getTime());
   }
 
   public ImmutableCollection<Entry> entries() {
-    return entries;
+    return this.entries;
   }
 
   public String description() {
-    return description;
+    return this.description;
   }
 
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-        .addValue(postingId())
-        .addValue(occurredOn())
-        .addValue(entries())
-        .addValue(description())
+        .addValue(this.postingId())
+        .addValue(this.occurredOn())
+        .addValue(this.entries())
+        .addValue(this.description())
         .toString();
   }
 
-  public class EmptyEntries extends RuntimeException {
+  public class EmptyEntries extends RuntimeException {}
 
-  }
-
-  public class NotBalancedEntries extends RuntimeException {
-
-  }
+  public class NotBalancedEntries extends RuntimeException {}
 }

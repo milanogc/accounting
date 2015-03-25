@@ -18,19 +18,19 @@ public class PostingTest {
 
   @Test(expected = Posting.NotBalancedEntries.class)
   public void postingOfOneEntry_ShouldThrowNotBalancedEntries() {
-    createPosting(ImmutableSet.of(new Entry(accountId, Amount.ONE)));
+    createPosting(ImmutableSet.of(new Entry(this.accountId, Amount.ONE)));
   }
 
   @Test(expected = Posting.NotBalancedEntries.class)
   public void postingOfTwoUnbalancedEntries_ShouldThrowNotBalancedEntries() {
-    createPosting(
-        ImmutableSet.of(new Entry(accountId, Amount.ONE), new Entry(accountId, Amount.ONE)));
+    createPosting(ImmutableSet.of(new Entry(this.accountId, Amount.ONE),
+        new Entry(this.accountId, Amount.ONE)));
   }
 
   @Test
   public void postingOfTwoBalancedEntries() {
-    createPosting(ImmutableSet.of(new Entry(accountId, Amount.ONE),
-                                  new Entry(accountId, Amount.ONE.negate())));
+    createPosting(ImmutableSet.of(new Entry(this.accountId, Amount.ONE),
+        new Entry(this.accountId, Amount.ONE.negate())));
   }
 
   private void createPosting(ImmutableCollection<Entry> entries) {

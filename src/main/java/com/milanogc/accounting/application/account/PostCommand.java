@@ -10,15 +10,16 @@ public class PostCommand {
   private ImmutableCollection<EntryCommand> entries;
 
   public PostCommand(Date occurredOn, ImmutableCollection<EntryCommand> entries) {
+    super();
     this.occurredOn = occurredOn;
     this.entries = entries;
   }
 
   public Date occurredOn() {
-    return new Date(occurredOn.getTime());
+    return new Date(this.occurredOn.getTime());
   }
 
   public ImmutableCollection<EntryCommand> entries() {
-    return entries;
+    return this.entries;
   }
 }

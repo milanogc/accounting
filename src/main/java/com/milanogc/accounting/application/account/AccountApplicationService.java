@@ -20,7 +20,7 @@ public class AccountApplicationService {
 
   @Transactional
   public String createAccount(CreateAccountCommand command) {
-    return new AccountService(accounts).createAccount(command.name(), command.createdOn(),
-      command.description(), command.parentAccountId()).id();
+    return new AccountService(this.accounts).createAccount(command.name(), command.createdOn(),
+        command.description(), command.parentAccountId()).id();
   }
 }

@@ -11,8 +11,7 @@ public class CreatePostingCommand {
   private Collection<Entry> entries;
   private String description;
 
-  public CreatePostingCommand(Date occurredOn,
-                              Collection<Entry> entries, String description) {
+  public CreatePostingCommand(Date occurredOn, Collection<Entry> entries, String description) {
     super();
     this.occurredOn = occurredOn;
     this.entries = entries;
@@ -20,14 +19,14 @@ public class CreatePostingCommand {
   }
 
   public Date occurredOn() {
-    return occurredOn;
+    return this.occurredOn;
   }
 
   public Collection<Entry> entries() {
-    return entries;
+    return this.entries;
   }
 
   public String description() {
-    return description;
+    return this.description;
   }
 }

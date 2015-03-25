@@ -16,19 +16,19 @@ public class Amount {
   }
 
   public BigDecimal value() {
-    return value;
+    return this.value;
   }
 
   public boolean isZero() {
-    return value.equals(BigDecimal.ZERO);
+    return this.value.equals(BigDecimal.ZERO);
   }
 
   public Amount plus(Amount otherAmount) {
-    return new Amount(value().add(otherAmount.value()));
+    return new Amount(this.value().add(otherAmount.value()));
   }
 
   public Amount negate() {
-    return new Amount(value().negate());
+    return new Amount(this.value().negate());
   }
 
   @Override
@@ -38,11 +38,11 @@ public class Amount {
     }
 
     Amount typedObject = (Amount) o;
-    return Objects.equals(value(), typedObject.value());
+    return Objects.equals(this.value(), typedObject.value());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(value());
+    return Objects.hash(this.value());
   }
 }

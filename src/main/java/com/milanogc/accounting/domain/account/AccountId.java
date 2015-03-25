@@ -15,7 +15,7 @@ public class AccountId {
   }
 
   public String id() {
-    return id;
+    return this.id;
   }
 
   private void setId(String id) {
@@ -29,12 +29,12 @@ public class AccountId {
     }
 
     AccountId typedObject = (AccountId) o;
-    return id().equals(typedObject.id());
+    return this.id().equals(typedObject.id());
   }
 
   @Override
   public int hashCode() {
-    return id().hashCode();
+    return this.id().hashCode();
   }
 
   @Override

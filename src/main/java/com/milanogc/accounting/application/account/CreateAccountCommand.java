@@ -12,7 +12,7 @@ public class CreateAccountCommand {
   private Date createdOn;
 
   public CreateAccountCommand(String name, AccountId parentAccountId, String description,
-                              Date createdOn) {
+      Date createdOn) {
     super();
     this.name = name;
     this.parentAccountId = parentAccountId;
@@ -21,18 +21,18 @@ public class CreateAccountCommand {
   }
 
   public String name() {
-    return name;
+    return this.name;
   }
 
   public AccountId parentAccountId() {
-    return parentAccountId;
+    return this.parentAccountId;
   }
 
   public String description() {
-    return description;
+    return this.description;
   }
 
   public Date createdOn() {
-    return createdOn;
+    return this.createdOn;
   }
 }

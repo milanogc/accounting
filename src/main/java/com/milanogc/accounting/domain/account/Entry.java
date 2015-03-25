@@ -32,18 +32,18 @@ public class Entry {
   }
 
   public AccountId account() {
-    return accountId;
+    return this.accountId;
   }
 
   public Amount amount() {
-    return amount;
+    return this.amount;
   }
 
   @Override
   public String toString() {
     return MoreObjects.toStringHelper(this)
-      .addValue(account())
-      .addValue(amount())
+      .addValue(this.account())
+      .addValue(this.amount())
       .toString();
   }
 
@@ -54,13 +54,13 @@ public class Entry {
     }
 
     Entry typedObject = (Entry) o;
-    return Objects.equals(account(), typedObject.account()) &&
-      Objects.equals(amount(), typedObject.amount());
+    return Objects.equals(this.account(), typedObject.account()) &&
+        Objects.equals(this.amount(), typedObject.amount());
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(account(), amount());
+    return Objects.hash(this.account(), this.amount());
   }
 
   public class ZeroAmount extends RuntimeException {}

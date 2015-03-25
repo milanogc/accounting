@@ -17,11 +17,11 @@ public class AccountCreatedDomainEvent implements DomainEvent {
   }
 
   public Account account() {
-    return account;
+    return this.account;
   }
 
   @Override
   public Date occurredOn() {
-    return new Date(occurredOn.getTime());
+    return new Date(this.occurredOn.getTime());
   }
 }

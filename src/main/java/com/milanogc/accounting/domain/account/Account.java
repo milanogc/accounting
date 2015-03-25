@@ -15,7 +15,7 @@ public class Account {
   private AccountId parentAccountId;
 
   public Account(AccountId accountId, String name, Date createdOn, String description,
-                 AccountId parentAccountId) {
+      AccountId parentAccountId) {
     super();
     setAccountId(accountId);
     setName(name);
@@ -25,7 +25,7 @@ public class Account {
   }
 
   public AccountId accountId() {
-    return accountId;
+    return this.accountId;
   }
 
   private void setAccountId(AccountId accountId) {
@@ -33,7 +33,7 @@ public class Account {
   }
 
   public AccountId parentAccountId() {
-    return parentAccountId;
+    return this.parentAccountId;
   }
 
   private void setParentAccountId(AccountId parentAccountId) {
@@ -41,7 +41,7 @@ public class Account {
   }
 
   public String name() {
-    return name;
+    return this.name;
   }
 
   private void setName(String name) {
@@ -49,7 +49,7 @@ public class Account {
   }
 
   public String description() {
-    return description;
+    return this.description;
   }
 
   private void setDescription(String description) {
@@ -57,7 +57,7 @@ public class Account {
   }
 
   public Date createdOn() {
-    return new Date(createdOn.getTime());
+    return new Date(this.createdOn.getTime());
   }
 
   private void setCreatedOn(Date createdOn) {

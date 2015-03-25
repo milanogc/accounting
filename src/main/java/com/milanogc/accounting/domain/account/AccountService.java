@@ -15,10 +15,10 @@ public class AccountService {
   }
 
   public AccountId createAccount(String name, Date createdOn, String description,
-                            AccountId parentAccountId) {
-    AccountId newAccountId = accounts.nextIdentity();
+      AccountId parentAccountId) {
+    AccountId newAccountId = this.accounts.nextIdentity();
     Account newAccount = new Account(newAccountId, name, createdOn, description, parentAccountId);
-    accounts.store(newAccount);
+    this.accounts.store(newAccount);
     DomainEventPublisher.instance().publish(new AccountCreatedDomainEvent(newAccount));
     return newAccountId;
   }
