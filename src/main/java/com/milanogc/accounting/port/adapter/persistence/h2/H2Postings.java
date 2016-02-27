@@ -42,14 +42,14 @@ public class H2Postings implements Postings {
   }
 
   private void insertPosting(Posting posting) {
-    namedParameterJdbcTemplate.getJdbcOperations().update("INSERT INTO POSTING (ID, OCCURRED_ON, "
-      + "DESCRIPTION) VALUES (?, ?, ?)", posting.postingId().id(), posting.occurredOn(),
-      posting.description());
+    namedParameterJdbcTemplate.getJdbcOperations().update(
+        "INSERT INTO POSTING (ID, OCCURRED_ON, DESCRIPTION) VALUES (?, ?, ?)",
+        posting.postingId().id(), posting.occurredOn(), posting.description());
   }
 
   private void insertEntry(PostingId postingId, Entry entry) {
-    namedParameterJdbcTemplate.getJdbcOperations().update("INSERT INTO POSTING_ENTRY (POSTING_ID, "
-      + "ACCOUNT_ID, AMOUNT) VALUES (?, ?, ?)", postingId.id(), entry.account().id(),
-      entry.amount().value());
+    namedParameterJdbcTemplate.getJdbcOperations().update(
+        "INSERT INTO POSTING_ENTRY (POSTING_ID, ACCOUNT_ID, AMOUNT) VALUES (?, ?, ?)",
+        postingId.id(), entry.account().id(), entry.amount().value());
   }
 }

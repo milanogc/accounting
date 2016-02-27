@@ -1,11 +1,11 @@
 package com.milanogc.accounting.domain.account;
 
-import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableList;
 
 import org.junit.Test;
 
 import java.util.Date;
+import java.util.List;
 
 public class PostingTest {
 
@@ -13,27 +13,27 @@ public class PostingTest {
 
   @Test(expected = Posting.EmptyEntries.class)
   public void postingWithoutEntries_ShouldThrowEmptyEntries() {
-    createPosting(ImmutableSet.of());
+    createPosting(ImmutableList.of());
   }
 
   @Test(expected = Posting.NotBalancedEntries.class)
   public void postingOfOneEntry_ShouldThrowNotBalancedEntries() {
-    createPosting(ImmutableSet.of(new Entry(this.accountId, Amount.ONE)));
+    createPosting(ImmutableList.of(new Entry(this.accountId, Amount.ONE)));
   }
 
   @Test(expected = Posting.NotBalancedEntries.class)
   public void postingOfTwoUnbalancedEntries_ShouldThrowNotBalancedEntries() {
-    createPosting(ImmutableSet.of(new Entry(this.accountId, Amount.ONE),
+    createPosting(ImmutableList.of(new Entry(this.accountId, Amount.ONE),
         new Entry(this.accountId, Amount.ONE)));
   }
 
   @Test
   public void postingOfTwoBalancedEntries() {
-    createPosting(ImmutableSet.of(new Entry(this.accountId, Amount.ONE),
+    createPosting(ImmutableList.of(new Entry(this.accountId, Amount.ONE),
         new Entry(this.accountId, Amount.ONE.negate())));
   }
 
-  private void createPosting(ImmutableCollection<Entry> entries) {
+  private void createPosting(List<Entry> entries) {
     new Posting(new PostingId(""), new Date(), entries);
   }
 }

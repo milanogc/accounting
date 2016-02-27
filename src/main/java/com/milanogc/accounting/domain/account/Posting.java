@@ -1,20 +1,24 @@
 package com.milanogc.accounting.domain.account;
 
 import com.google.common.base.MoreObjects;
-import com.google.common.collect.ImmutableCollection;
+import com.google.common.collect.ImmutableList;
+
+import com.milanogc.ddd.domain.Entity;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Objects;
+import java.util.Set;
 
-// entity
-public class Posting {
+public class Posting extends Entity {
 
   private PostingId postingId;
   private Date occurredOn;
-  private ImmutableCollection<Entry> entries;
+  private List<Entry> entries;
   private String description;
 
-  public Posting(PostingId postingId, Date occurredOn, ImmutableCollection<Entry> entries,
+  public Posting(PostingId postingId, Date occurredOn, List<Entry> entries,
       String description) {
     super();
     setPostingId(postingId);
@@ -23,12 +27,14 @@ public class Posting {
     setDescription(description);
   }
 
-  public Posting(PostingId postingId, Date occurredOn, ImmutableCollection<Entry> entries) {
+  public Posting(PostingId postingId, Date occurredOn, List<Entry> entries) {
     this(postingId, occurredOn, entries, null);
   }
 
-  private static boolean isBalanced(ImmutableCollection<Entry> entries) {
-    Amount sum = entries.stream().map(Entry::amount).reduce(Amount.ZERO, (a, b) -> a.plus(b));
+  private static boolean isBalanced(List<Entry> entries) {
+    Amount sum = entries.stream()
+        .map(Entry::amount)
+        .reduce(Amount.ZERO, (a, b) -> a.plus(b));
     return sum.isZero();
   }
 
@@ -41,19 +47,19 @@ public class Posting {
         "The occurredOn must be provided.").getTime());
   }
 
-  private void setEntries(ImmutableCollection<Entry> entries) {
+  private void setEntries(List<Entry> entries) {
     errorIfEmptyEntries(entries);
     errorIfNotBalancedEntries(entries);
-    this.entries = entries;
+    this.entries = ImmutableList.copyOf(entries);
   }
 
-  private void errorIfEmptyEntries(ImmutableCollection<Entry> entries) {
+  private void errorIfEmptyEntries(List<Entry> entries) {
     if (entries.isEmpty()) {
       throw new EmptyEntries();
     }
   }
 
-  private void errorIfNotBalancedEntries(ImmutableCollection<Entry> entries) {
+  private void errorIfNotBalancedEntries(List<Entry> entries) {
     if (!isBalanced(entries)) {
       throw new NotBalancedEntries();
     }
@@ -71,7 +77,7 @@ public class Posting {
     return new Date(this.occurredOn.getTime());
   }
 
-  public ImmutableCollection<Entry> entries() {
+  public List<Entry> entries() {
     return this.entries;
   }
 
@@ -92,4 +98,32 @@ public class Posting {
   public class EmptyEntries extends RuntimeException {}
 
   public class NotBalancedEntries extends RuntimeException {}
+
+  public static class Builder {
+
+    private PostingId postingId;
+    private Date occurredOn;
+    private Set<Entry> entries = new HashSet<>();
+    private String description;
+
+    public Builder(PostingId postingId, Date occurredOn) {
+      this.postingId = postingId;
+      this.occurredOn = occurredOn;
+    }
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Builder addEntry(AccountId accountId, Amount amount) {
+      this.entries.add(new Entry(accountId, amount));
+      return this;
+    }
+
+    public Posting build() {
+      return new Posting(this.postingId, this.occurredOn, ImmutableList.copyOf(this.entries),
+          this.description);
+    }
+  }
 }

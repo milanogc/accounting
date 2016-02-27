@@ -1,12 +1,11 @@
 package com.milanogc.accounting.port.adapter.ui.console;
 
-import com.google.common.collect.ImmutableCollection;
-import com.google.common.collect.ImmutableSet;
+import com.google.common.collect.ImmutableList;
 
 import com.milanogc.accounting.application.account.AccountApplicationService;
-import com.milanogc.accounting.application.account.CreateAccountCommand;
-import com.milanogc.accounting.application.account.EntryCommand;
-import com.milanogc.accounting.application.account.PostCommand;
+import com.milanogc.accounting.application.account.commands.CreateAccountCommand;
+import com.milanogc.accounting.application.account.commands.EntryCommand;
+import com.milanogc.accounting.application.account.commands.PostCommand;
 import com.milanogc.accounting.application.account.PostingApplicationService;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,14 +33,19 @@ public class CommandLineApp implements CommandLineRunner {
 
   @Override
   public void run(String... strings) {
-    CreateAccountCommand assetCommand = new CreateAccountCommand("Asset", null, null, new Date());
-    String assetId = this.accountApplicationService.createAccount(assetCommand);
-    CreateAccountCommand liabilityCommand = new CreateAccountCommand("Liability", null, null,
-        new Date());
-    String liabilityId = this.accountApplicationService.createAccount(liabilityCommand);
-    ImmutableCollection<EntryCommand> entries = ImmutableSet.of(
+    String rootId = createAccount("ROOT", null);
+    String assetId = createAccount("Asset", rootId);
+    String liabilityId = createAccount("Liability", rootId);
+    String equityId = createAccount("Equity", rootId);
+    ImmutableList<EntryCommand> entries = ImmutableList.of(
         new EntryCommand(assetId, new BigDecimal("100")),
         new EntryCommand(liabilityId, new BigDecimal("-100")));
-    this.postingApplicationService.post(new PostCommand(new Date(), entries));
+    this.postingApplicationService.post(new PostCommand(new Date(), entries, null));
+  }
+
+  private String createAccount(String name, String parentAccountId) {
+    CreateAccountCommand createAccountCommand = new CreateAccountCommand(name, parentAccountId,
+        null, new Date());
+    return this.accountApplicationService.createAccount(createAccountCommand);
   }
 }

@@ -1,6 +1,6 @@
 package com.milanogc.accounting.domain.account.events;
 
-import com.milanogc.accounting.domain.account.Account;
+import com.milanogc.accounting.domain.account.AccountId;
 import com.milanogc.ddd.domain.DomainEvent;
 
 import java.util.Date;
@@ -8,16 +8,17 @@ import java.util.Objects;
 
 public class AccountCreatedDomainEvent implements DomainEvent {
 
-  private Date occurredOn = new Date();
-  private Account account;
+  private Date occurredOn;
+  private AccountId accountId;
 
-  public AccountCreatedDomainEvent(Account account) {
+  public AccountCreatedDomainEvent(AccountId accountId) {
     super();
-    this.account = Objects.requireNonNull(account, "The account must be provided.");
+    this.occurredOn = new Date();
+    this.accountId = Objects.requireNonNull(accountId, "The accountId must be provided.");
   }
 
-  public Account account() {
-    return this.account;
+  public AccountId accountId() {
+    return this.accountId;
   }
 
   @Override

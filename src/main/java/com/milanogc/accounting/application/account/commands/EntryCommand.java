@@ -1,4 +1,4 @@
-package com.milanogc.accounting.application.account;
+package com.milanogc.accounting.application.account.commands;
 
 import java.math.BigDecimal;
 

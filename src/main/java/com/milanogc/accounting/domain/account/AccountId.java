@@ -2,10 +2,11 @@ package com.milanogc.accounting.domain.account;
 
 import com.google.common.base.MoreObjects;
 
+import com.milanogc.ddd.domain.ValueObject;
+
 import java.util.Objects;
 
-// value object
-public class AccountId {
+public class AccountId extends ValueObject {
 
   private String id;
 

@@ -1,17 +1,15 @@
-package com.milanogc.accounting.application.account;
-
-import com.milanogc.accounting.domain.account.AccountId;
+package com.milanogc.accounting.application.account.commands;
 
 import java.util.Date;
 
 public class CreateAccountCommand {
 
   private String name;
-  private AccountId parentAccountId;
+  private String parentAccountId;
   private String description;
   private Date createdOn;
 
-  public CreateAccountCommand(String name, AccountId parentAccountId, String description,
+  public CreateAccountCommand(String name, String parentAccountId, String description,
       Date createdOn) {
     super();
     this.name = name;
@@ -24,7 +22,7 @@ public class CreateAccountCommand {
     return this.name;
   }
 
-  public AccountId parentAccountId() {
+  public String parentAccountId() {
     return this.parentAccountId;
   }
 

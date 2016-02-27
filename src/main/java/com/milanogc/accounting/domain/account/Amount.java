@@ -1,17 +1,24 @@
 package com.milanogc.accounting.domain.account;
 
+import com.milanogc.ddd.domain.ValueObject;
+
 import java.math.BigDecimal;
 import java.util.Objects;
 
 // value object
-public class Amount {
+public class Amount extends ValueObject {
 
-  public static Amount ZERO = new Amount(BigDecimal.ZERO);
-  public static Amount ONE = new Amount(BigDecimal.ONE);
+  public static final Amount ZERO = new Amount(BigDecimal.ZERO);
+  public static final Amount ONE = new Amount(BigDecimal.ONE);
+
   private BigDecimal value;
 
-  public Amount(BigDecimal value) {
+  private Amount() {
     super();
+  }
+
+  public Amount(BigDecimal value) {
+    this();
     this.value = value;
   }
 
@@ -20,7 +27,7 @@ public class Amount {
   }
 
   public boolean isZero() {
-    return this.value.equals(BigDecimal.ZERO);
+    return this.equals(ZERO);
   }
 
   public Amount plus(Amount otherAmount) {

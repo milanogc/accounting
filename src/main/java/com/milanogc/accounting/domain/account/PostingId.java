@@ -1,9 +1,10 @@
 package com.milanogc.accounting.domain.account;
 
+import com.milanogc.ddd.domain.ValueObject;
+
 import java.util.Objects;
 
-// value object
-public class PostingId {
+public class PostingId extends ValueObject {
 
   private String id;
 

@@ -1,39 +1,30 @@
 package com.milanogc.accounting.domain.account;
 
+import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.Subscribe;
+
 import com.milanogc.accounting.domain.account.events.AccountCreatedDomainEvent;
-import com.milanogc.ddd.domain.DomainEventPublisher;
-import com.milanogc.ddd.domain.DomainEventSubscriber;
 
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Date;
 
 public class AccountServiceTest {
-  @Before
-  public void reset() {
-    DomainEventPublisher.instance().reset();
-  }
-
   @Test
   public void createAccount() {
+    EventBus eventBus = new EventBus();
     final boolean[] accountCreatedFlag = {false};
 
-    DomainEventPublisher.instance().subscribe(new DomainEventSubscriber<AccountCreatedDomainEvent>() {
-      @Override
+    eventBus.register(new Object() {
+      @Subscribe
       public void handleEvent(AccountCreatedDomainEvent aDomainEvent) {
         accountCreatedFlag[0] = true;
-      }
-
-      @Override
-      public Class<AccountCreatedDomainEvent> subscribedToEventType() {
-        return AccountCreatedDomainEvent.class;
       }
     });
 
     Accounts accounts = new InMemoryAccounts();
-    AccountService accountService = new AccountService(accounts);
+    AccountService accountService = new AccountService(accounts, eventBus);
     accountService.createAccount("ASSET", new Date(), "", null);
     Assert.assertEquals(accountCreatedFlag[0], true);
   }

@@ -2,11 +2,12 @@ package com.milanogc.accounting.domain.account;
 
 import com.google.common.base.MoreObjects;
 
+import com.milanogc.ddd.domain.Entity;
+
 import java.util.Date;
 import java.util.Objects;
 
-// entity
-public class Account {
+public class Account extends Entity {
 
   private AccountId accountId;
   private String name;
@@ -14,9 +15,13 @@ public class Account {
   private String description;
   private AccountId parentAccountId;
 
+  private Account() {
+    super();
+  }
+
   public Account(AccountId accountId, String name, Date createdOn, String description,
       AccountId parentAccountId) {
-    super();
+    this();
     setAccountId(accountId);
     setName(name);
     setCreatedOn(createdOn);

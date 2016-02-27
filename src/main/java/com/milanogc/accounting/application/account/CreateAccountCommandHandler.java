@@ -1,5 +1,7 @@
 package com.milanogc.accounting.application.account;
 
+import com.milanogc.accounting.application.account.commands.CreateAccountCommand;
+import com.milanogc.accounting.domain.account.AccountId;
 import com.milanogc.accounting.domain.account.AccountService;
 
 public class CreateAccountCommandHandler {
@@ -13,6 +15,6 @@ public class CreateAccountCommandHandler {
 
   public void handle(CreateAccountCommand command) {
     this.accountService.createAccount(command.name(), command.createdOn(), command.description(),
-        command.parentAccountId());
+        new AccountId(command.parentAccountId()));
   }
 }
