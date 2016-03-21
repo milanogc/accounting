@@ -1,16 +1,14 @@
 package com.milanogc.accounting.readmodel.finder.h2;
 
-import com.google.common.collect.ImmutableMap;
-
-import com.milanogc.accounting.readmodel.finder.h2.dto.Account;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
-import java.util.Map;
+import com.milanogc.accounting.readmodel.finder.h2.dto.Account;
+import com.milanogc.accounting.readmodel.finder.h2.dto.Accounts;
 
 @Repository
 public class H2AccountFinder {
@@ -36,7 +34,6 @@ public class H2AccountFinder {
 
   private static final String CHILDREN_ACCOUNTS =
       "SELECT " +
-        "ANCESTOR_ACCOUNT_ID, " +
         "DESCENDANT_ACCOUNT_ID " +
       "FROM ACCOUNT_CLOSURE " +
       "WHERE ANCESTOR_ACCOUNT_ID = ? " +
@@ -49,20 +46,18 @@ public class H2AccountFinder {
     this.jdbcTemplate = jdbcTemplate;
   }
 
-  public List<Map<String, Object>> allAccounts() {
-    return jdbcTemplate().queryForList(ALL_ACCOUNTS);
+  public Accounts allAccounts() {
+    List<Account> accounts = jdbcTemplate.query(ALL_ACCOUNTS,
+        new BeanPropertyRowMapper<Account>(Account.class));
+    return new Accounts(accounts);
   }
 
-  public Account account(String id) {
-    Account account = (Account) jdbcTemplate().queryForObject(SINGLE_ACCOUNT, new String[]{id},
-        new BeanPropertyRowMapper(Account.class));
-    List<String> childrenAccounts = jdbcTemplate().queryForList(CHILDREN_ACCOUNTS,
-        new String[]{id, id}, String.class);
+  public Account account(String accountId) {
+    Account account = jdbcTemplate.queryForObject(SINGLE_ACCOUNT, new String[]{accountId},
+        new BeanPropertyRowMapper<Account>(Account.class));
+    List<String> childrenAccounts = jdbcTemplate.queryForList(CHILDREN_ACCOUNTS,
+        new String[]{accountId, accountId}, String.class);
     account.setChildren(childrenAccounts);
     return account;
-  }
-
-  private JdbcTemplate jdbcTemplate() {
-    return this.jdbcTemplate;
   }
 }
