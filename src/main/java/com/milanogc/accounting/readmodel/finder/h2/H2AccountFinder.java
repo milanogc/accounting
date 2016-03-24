@@ -20,7 +20,8 @@ public class H2AccountFinder {
         "CREATED_ON, " +
         "DESCRIPTION, " +
         "PARENT_ACCOUNT_ID AS PARENT " +
-      "FROM ACCOUNT";
+      "FROM ACCOUNT " +
+      "ORDER BY NAME";
 
   private static final String SINGLE_ACCOUNT =
       "SELECT " +
@@ -34,10 +35,10 @@ public class H2AccountFinder {
 
   private static final String CHILDREN_ACCOUNTS =
       "SELECT " +
-        "DESCENDANT_ACCOUNT_ID " +
-      "FROM ACCOUNT_CLOSURE " +
-      "WHERE ANCESTOR_ACCOUNT_ID = ? " +
-        "AND DESCENDANT_ACCOUNT_ID <> ?";
+        "ID " +
+      "FROM ACCOUNT " +
+      "WHERE PARENT_ACCOUNT_ID = ? " +
+      "ORDER BY NAME";
 
   private final JdbcTemplate jdbcTemplate;
 
@@ -49,15 +50,20 @@ public class H2AccountFinder {
   public Accounts allAccounts() {
     List<Account> accounts = jdbcTemplate.query(ALL_ACCOUNTS,
         new BeanPropertyRowMapper<Account>(Account.class));
+    accounts.stream().forEach(a -> setChildren(a.getId(), a));
     return new Accounts(accounts);
   }
 
   public Account account(String accountId) {
     Account account = jdbcTemplate.queryForObject(SINGLE_ACCOUNT, new String[]{accountId},
         new BeanPropertyRowMapper<Account>(Account.class));
-    List<String> childrenAccounts = jdbcTemplate.queryForList(CHILDREN_ACCOUNTS,
-        new String[]{accountId, accountId}, String.class);
-    account.setChildren(childrenAccounts);
+    setChildren(accountId, account);
     return account;
+  }
+
+  private void setChildren(String accountId, Account account) {
+    List<String> childrenAccounts = jdbcTemplate.queryForList(CHILDREN_ACCOUNTS,
+        new String[]{accountId}, String.class);
+    account.setChildren(childrenAccounts);
   }
 }

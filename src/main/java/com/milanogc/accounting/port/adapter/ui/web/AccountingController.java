@@ -10,6 +10,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -61,10 +63,11 @@ public class AccountingController {
   }
 
   @RequestMapping(value = "/accounts", method = RequestMethod.POST)
-  public void createAccount(@RequestBody Account account) {
+  public ResponseEntity<Account> createAccount(@RequestBody Account account) {
     CreateAccountCommand command = new CreateAccountCommand(account.getName(), account.getParent(),
         account.getDescription(), new Date());
-    accountApplicationService.createAccount(command);
+    String accountId = accountApplicationService.createAccount(command);
+    return new ResponseEntity<Account>(accountFinder.account(accountId), HttpStatus.CREATED);
   }
 
   @RequestMapping(value = "/entries", method = RequestMethod.GET)
