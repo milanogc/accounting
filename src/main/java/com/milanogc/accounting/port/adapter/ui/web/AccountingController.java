@@ -58,8 +58,8 @@ public class AccountingController {
 
   @RequestMapping(value = "/accounts/{id}", method = RequestMethod.GET)
   @ResponseBody
-  public Account account(@PathVariable("id") String accountId) {
-    return accountFinder.account(accountId);
+  public ResponseEntity<Account> account(@PathVariable("id") String accountId) {
+    return new ResponseEntity<Account>(accountFinder.account(accountId), HttpStatus.OK);
   }
 
   @RequestMapping(value = "/accounts", method = RequestMethod.POST)
@@ -72,8 +72,8 @@ public class AccountingController {
 
   @RequestMapping(value = "/entries", method = RequestMethod.GET)
   @ResponseBody
-  public Entries entriesOfAccount(@RequestParam("filter[account]") String accountId) {
-    return entryFinder.entriesOfAccount(accountId);
+  public ResponseEntity<Entries> entriesOfAccount(@RequestParam("filter[account]") String accountId) {
+    return new ResponseEntity<Entries>(entryFinder.entriesOfAccount(accountId), HttpStatus.OK);
   }
 
   @RequestMapping(value = "/transactions", method = RequestMethod.POST)
