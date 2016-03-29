@@ -53,7 +53,7 @@
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>3.2.1</version>
                 <configuration>
-                    <url>jdbc:h2:file:/home/milano/accounting;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</url>
+                    <url>jdbc:h2:file:~/accounting;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE</url>
                     <user>sa</user>
                 </configuration>
                 <dependencies>
