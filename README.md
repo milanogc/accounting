@@ -1,5 +1,6 @@
-MiniAccounting
-==============
+# MiniAccounting
+
+[![Build Status](https://api.travis-ci.org/milanogc/accounting.svg)](https://travis-ci.org/milanogc/accounting)
 
 This project is an attempt to create a [GnuCash](https://www.gnucash.org) like system, i.e. it adopts the double entry [bookkeeping accounting system](https://en.wikipedia.org/wiki/Double-entry_bookkeeping_system), for the management of personal finances.
 
