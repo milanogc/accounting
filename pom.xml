@@ -101,5 +101,9 @@
           <groupId>org.postgresql</groupId>
           <artifactId>postgresql</artifactId>
         </dependency>
+        <dependency>
+          <groupId>com.zaxxer</groupId>
+          <artifactId>HikariCP</artifactId>
+        </dependency>
     </dependencies>
 </project>

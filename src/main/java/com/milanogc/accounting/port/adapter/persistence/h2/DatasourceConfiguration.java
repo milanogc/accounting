@@ -1,13 +1,13 @@
 package com.milanogc.accounting.port.adapter.persistence.h2;
 
-import org.springframework.beans.factory.annotation.Value;
+import javax.sql.DataSource;
+
+import org.springframework.boot.autoconfigure.jdbc.DataSourceBuilder;
+import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.namedparam.NamedParameterJdbcTemplate;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.stereotype.Component;
-
-import javax.sql.DataSource;
 
 @Component
 public class DatasourceConfiguration {
@@ -22,16 +22,8 @@ public class DatasourceConfiguration {
   }
 
   @Bean
-  public DataSource dataSource(
-      @Value("${accounting.datasource.driverClassName}") String driverClassName,
-      @Value("${accounting.datasource.url}") String url,
-      @Value("${accounting.datasource.username}") String username,
-      @Value("${accounting.datasource.password}") String password) {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName(driverClassName);
-    dataSource.setUrl(url);
-    dataSource.setUsername(username);
-    dataSource.setPassword(password);
-    return dataSource;
+  @ConfigurationProperties(prefix = "accounting.datasource")
+  public DataSource dataSource() {
+    return DataSourceBuilder.create().build();
   }
 }
