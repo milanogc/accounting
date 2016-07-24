@@ -1,4 +1,4 @@
-package com.milanogc.accounting.port.adapter.ui.web;
+package com.milanogc.accounting.port.adapter.ui.web.rest;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -6,13 +6,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.SpringApplication;
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +29,6 @@ import com.milanogc.accounting.readmodel.finder.h2.dto.Entries;
 import com.milanogc.accounting.readmodel.finder.h2.dto.Posting;
 
 @RestController
-@CrossOrigin
-@EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
-@ComponentScan("com.milanogc.accounting")
 public class AccountingController {
 
   @Autowired
@@ -83,9 +75,5 @@ public class AccountingController {
         .collect(Collectors.toCollection(ArrayList::new));
     PostCommand command = new PostCommand(posting.getOccurredOn(), entries, posting.getDescription());
     postingApplicationService.post(command);
-  }
-
-  public static void main(String[] args) {
-    SpringApplication.run(AccountingController.class, args);
   }
 }

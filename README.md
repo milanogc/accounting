@@ -25,5 +25,5 @@ Frontend
 How to run?
 -----------
 
-    mvn compile flyway:migrate
-    mvn spring-boot:run
+    mvn spring-boot:run # use h2 database (default profile) 
+    mvn spring-boot:run -Drun.profiles=postgres # use postgres database
