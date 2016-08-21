@@ -1,12 +1,6 @@
 package com.milanogc.accounting.port.adapter.ui.console;
 
-import com.google.common.collect.ImmutableList;
-
-import com.milanogc.accounting.application.account.AccountApplicationService;
-import com.milanogc.accounting.application.account.commands.CreateAccountCommand;
-import com.milanogc.accounting.application.account.commands.EntryCommand;
-import com.milanogc.accounting.application.account.commands.PostCommand;
-import com.milanogc.accounting.application.account.PostingApplicationService;
+import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -15,8 +9,10 @@ import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
 import org.springframework.context.annotation.ComponentScan;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import com.milanogc.accounting.application.account.AccountApplicationService;
+import com.milanogc.accounting.application.account.PostingApplicationService;
+import com.milanogc.accounting.application.account.commands.CreateAccountCommand;
+import com.milanogc.accounting.port.adapter.importer.hledger.HLedgerImporter;
 
 @ComponentScan("com.milanogc.accounting")
 @EnableAutoConfiguration(exclude={DataSourceAutoConfiguration.class})
@@ -33,14 +29,17 @@ public class CommandLineApp implements CommandLineRunner {
 
   @Override
   public void run(String... strings) {
-    String rootId = createAccount("ROOT", null);
+    /*String rootId = createAccount("ROOT", null);
     String assetId = createAccount("Asset", rootId);
     String liabilityId = createAccount("Liability", rootId);
     String equityId = createAccount("Equity", rootId);
     ImmutableList<EntryCommand> entries = ImmutableList.of(
         new EntryCommand(assetId, new BigDecimal("100")),
         new EntryCommand(liabilityId, new BigDecimal("-100")));
-    this.postingApplicationService.post(new PostCommand(new Date(), entries, null));
+    this.postingApplicationService.post(new PostCommand(new Date(), entries, null));*/
+    HLedgerImporter importer = new HLedgerImporter(accountApplicationService, postingApplicationService);
+    importer.createAccounts();
+    
   }
 
   private String createAccount(String name, String parentAccountId) {
