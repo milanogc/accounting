@@ -1,4 +1,4 @@
-package com.milanogc.accounting.port.adapter.persistence.h2;
+package com.milanogc.accounting.port.adapter.persistence.postgres;
 
 import com.milanogc.accounting.domain.account.Entry;
 import com.milanogc.accounting.domain.account.Posting;

@@ -1,4 +1,4 @@
-package com.milanogc.accounting.port.adapter.persistence.h2;
+package com.milanogc.accounting.port.adapter.persistence.postgres;
 
 import javax.sql.DataSource;
 

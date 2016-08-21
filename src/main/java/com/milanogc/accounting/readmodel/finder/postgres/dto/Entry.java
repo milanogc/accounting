@@ -1,4 +1,4 @@
-package com.milanogc.accounting.readmodel.finder.h2.dto;
+package com.milanogc.accounting.readmodel.finder.postgres.dto;
 
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,6 +9,8 @@ public class Entry {
   private String account;
   private BigDecimal amount;
   private Date occurredOn;
+  private String description;
+  private BigDecimal sum;
 
   public String getId() {
     return id;
@@ -40,5 +42,21 @@ public class Entry {
 
   public void setOccurredOn(Date occurredOn) {
     this.occurredOn = occurredOn;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+  public BigDecimal getSum() {
+    return sum;
+  }
+
+  public void setSum(BigDecimal sum) {
+    this.sum = sum;
   }
 }

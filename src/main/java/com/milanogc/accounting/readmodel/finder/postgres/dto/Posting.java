@@ -1,4 +1,4 @@
-package com.milanogc.accounting.readmodel.finder.h2.dto;
+package com.milanogc.accounting.readmodel.finder.postgres.dto;
 
 import java.util.Date;
 
