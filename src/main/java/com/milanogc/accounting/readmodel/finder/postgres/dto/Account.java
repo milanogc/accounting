@@ -1,5 +1,6 @@
-package com.milanogc.accounting.readmodel.finder.h2.dto;
+package com.milanogc.accounting.readmodel.finder.postgres.dto;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -14,6 +15,7 @@ public class Account {
   private String description;
   private String parent;
   private List<String> children = new ArrayList<String>();
+  private BigDecimal balance;
 
   public String getId() {
     return id;
@@ -61,5 +63,13 @@ public class Account {
 
   public void setChildren(List<String> children) {
     this.children = children;
+  }
+
+  public BigDecimal getBalance() {
+    return balance;
+  }
+
+  public void setBalance(BigDecimal balance) {
+    this.balance = balance;
   }
 }

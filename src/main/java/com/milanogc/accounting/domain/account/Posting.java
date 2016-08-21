@@ -31,11 +31,11 @@ public class Posting extends Entity {
     this(postingId, occurredOn, entries, null);
   }
 
-  private static boolean isBalanced(List<Entry> entries) {
+  private static Amount sum(List<Entry> entries) {
     Amount sum = entries.stream()
         .map(Entry::amount)
         .reduce(Amount.ZERO, (a, b) -> a.plus(b));
-    return sum.isZero();
+    return sum;
   }
 
   private void setPostingId(PostingId postingId) {
@@ -60,8 +60,10 @@ public class Posting extends Entity {
   }
 
   private void errorIfNotBalancedEntries(List<Entry> entries) {
-    if (!isBalanced(entries)) {
-      throw new NotBalancedEntries();
+    Amount sum = sum(entries);
+    
+    if (!sum.isZero()) {
+      throw new NotBalancedEntries("The sum should be `" + Amount.ZERO  + "', was `" + sum + "' instead.");
     }
   }
 
@@ -97,7 +99,12 @@ public class Posting extends Entity {
 
   public class EmptyEntries extends RuntimeException {}
 
-  public class NotBalancedEntries extends RuntimeException {}
+  public class NotBalancedEntries extends RuntimeException {
+
+    public NotBalancedEntries(String message) {
+      super(message);
+    }
+  }
 
   public static class Builder {
 

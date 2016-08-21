@@ -21,21 +21,21 @@ import com.milanogc.accounting.application.account.PostingApplicationService;
 import com.milanogc.accounting.application.account.commands.CreateAccountCommand;
 import com.milanogc.accounting.application.account.commands.EntryCommand;
 import com.milanogc.accounting.application.account.commands.PostCommand;
-import com.milanogc.accounting.readmodel.finder.h2.H2AccountFinder;
-import com.milanogc.accounting.readmodel.finder.h2.H2EntryFinder;
-import com.milanogc.accounting.readmodel.finder.h2.dto.Account;
-import com.milanogc.accounting.readmodel.finder.h2.dto.Accounts;
-import com.milanogc.accounting.readmodel.finder.h2.dto.Entries;
-import com.milanogc.accounting.readmodel.finder.h2.dto.Posting;
+import com.milanogc.accounting.readmodel.finder.postgres.PostgresAccountFinder;
+import com.milanogc.accounting.readmodel.finder.postgres.PostgresEntryFinder;
+import com.milanogc.accounting.readmodel.finder.postgres.dto.Account;
+import com.milanogc.accounting.readmodel.finder.postgres.dto.Accounts;
+import com.milanogc.accounting.readmodel.finder.postgres.dto.Entries;
+import com.milanogc.accounting.readmodel.finder.postgres.dto.Posting;
 
 @RestController
 public class AccountingController {
 
   @Autowired
-  private H2AccountFinder accountFinder;
+  private PostgresAccountFinder accountFinder;
   
   @Autowired
-  private H2EntryFinder entryFinder;
+  private PostgresEntryFinder entryFinder;
 
   @Autowired
   private AccountApplicationService accountApplicationService;

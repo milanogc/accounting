@@ -1,9 +1,10 @@
 package com.milanogc.accounting.domain.account;
 
-import com.milanogc.ddd.domain.ValueObject;
-
 import java.math.BigDecimal;
 import java.util.Objects;
+
+import com.google.common.base.MoreObjects;
+import com.milanogc.ddd.domain.ValueObject;
 
 // value object
 public class Amount extends ValueObject {
@@ -45,11 +46,18 @@ public class Amount extends ValueObject {
     }
 
     Amount typedObject = (Amount) o;
-    return Objects.equals(this.value(), typedObject.value());
+    return this.value().compareTo(typedObject.value()) == 0;
   }
 
   @Override
   public int hashCode() {
     return Objects.hash(this.value());
+  }
+  
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .addValue(this.value())
+        .toString();
   }
 }
