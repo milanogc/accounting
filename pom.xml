@@ -36,7 +36,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
         <configuration>
-          <mainClass>com.milanogc.accounting.port.adapter.ui.web.AccountingController</mainClass>
+          <mainClass>com.milanogc.accounting.port.adapter.ui.web.WebApp</mainClass>
           <layout>ZIP</layout>
         </configuration>
         <executions>
