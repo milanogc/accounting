@@ -12,12 +12,12 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public class H2Postings implements Postings {
+public class PostgresPostings implements Postings {
 
   private NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
   @Autowired
-  public H2Postings(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+  public PostgresPostings(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
     super();
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
   }

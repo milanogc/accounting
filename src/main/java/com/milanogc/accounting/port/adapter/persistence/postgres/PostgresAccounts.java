@@ -21,20 +21,20 @@ import java.util.UUID;
 
 @Repository
 @Transactional(propagation = Propagation.MANDATORY)
-public class H2Accounts implements Accounts {
+public class PostgresAccounts implements Accounts {
 
-  private static final String INSERT_ACCOUNT = "INSERT INTO ACCOUNT (ID, NAME, CREATED_ON, "
-    + "DESCRIPTION, PARENT_ACCOUNT_ID) VALUES (?, ?, ?, ?, ?)";
-  private static final String INSERT_SELF_CLOSURE = "INSERT INTO ACCOUNT_CLOSURE "
-    + "(ANCESTOR_ACCOUNT_ID, DESCENDANT_ACCOUNT_ID) VALUES (:ACCOUNT, :ACCOUNT)";
-  private static final String INSERT_OTHERS_CLOSURES  = "INSERT INTO ACCOUNT_CLOSURE "
-    + "(ANCESTOR_ACCOUNT_ID, DESCENDANT_ACCOUNT_ID) SELECT ANCESTOR_ACCOUNT_ID, :DESCENDANT FROM "
-    + "ACCOUNT_CLOSURE WHERE DESCENDANT_ACCOUNT_ID = :ANCESTOR";
+  private static final String INSERT_ACCOUNT =
+      "INSERT INTO ACCOUNT (ID, NAME, CREATED_ON, DESCRIPTION, PARENT_ACCOUNT_ID) VALUES (?, ?, ?, ?, ?)";
+  private static final String INSERT_SELF_CLOSURE =
+      "INSERT INTO ACCOUNT_CLOSURE (ANCESTOR_ACCOUNT_ID, DESCENDANT_ACCOUNT_ID) VALUES (:ACCOUNT, :ACCOUNT)";
+  private static final String INSERT_OTHERS_CLOSURES  =
+      "INSERT INTO ACCOUNT_CLOSURE (ANCESTOR_ACCOUNT_ID, DESCENDANT_ACCOUNT_ID) " +
+        "SELECT ANCESTOR_ACCOUNT_ID, :DESCENDANT FROM ACCOUNT_CLOSURE WHERE DESCENDANT_ACCOUNT_ID = :ANCESTOR";
 
   private final NamedParameterJdbcTemplate namedParameterJdbcTemplate;
 
   @Autowired
-  public H2Accounts(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
+  public PostgresAccounts(NamedParameterJdbcTemplate namedParameterJdbcTemplate) {
     super();
     this.namedParameterJdbcTemplate = namedParameterJdbcTemplate;
   }
@@ -47,7 +47,7 @@ public class H2Accounts implements Accounts {
   @Override
   public Account load(AccountId accountId) {
     return (Account) this.namedParameterJdbcTemplate.getJdbcOperations().queryForObject(
-      "SELECT * FROM ACCOUNT WHERE ID = ?", new CustomerRowMapper(), accountId.id());
+      "SELECT * FROM ACCOUNT WHERE ID = ?", new AccountRowMapper(), accountId.id());
   }
 
   @Override
@@ -71,9 +71,9 @@ public class H2Accounts implements Accounts {
     return accountId != null ? accountId.id() : null;
   }
 
-  private static class CustomerRowMapper implements RowMapper {
+  private static class AccountRowMapper implements RowMapper<Account> {
 
-    public Object mapRow(ResultSet rs, int rowNum) throws SQLException {
+    public Account mapRow(ResultSet rs, int rowNum) throws SQLException {
       AccountId accountId = new AccountId(rs.getString("ID"));
       String name = rs.getString("NAME");
       Date createdOn = rs.getDate("CREATED_ON");
