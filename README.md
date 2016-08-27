@@ -16,6 +16,7 @@ Some technologies adopted on the backend
 - Spring JDBC template: in this project I am avoiding the use of an ORM, Object-Relational Mapping, to see how is the old feeling of working directly with SQL.
 - Spring Boot
 - Jackson (JSON processor)
+- Postgres
 
 Frontend
 -----------
@@ -25,5 +26,4 @@ Frontend
 How to run?
 -----------
 
-    mvn spring-boot:run # use h2 database (default profile) 
     mvn spring-boot:run -Drun.profiles=postgres # use postgres database
