@@ -23,6 +23,7 @@ import com.milanogc.accounting.application.account.commands.EntryCommand;
 import com.milanogc.accounting.application.account.commands.PostCommand;
 import com.milanogc.accounting.readmodel.finder.postgres.PostgresAccountFinder;
 import com.milanogc.accounting.readmodel.finder.postgres.PostgresEntryFinder;
+import com.milanogc.accounting.readmodel.finder.postgres.PostgresPostingFinder;
 import com.milanogc.accounting.readmodel.finder.postgres.dto.Account;
 import com.milanogc.accounting.readmodel.finder.postgres.dto.Accounts;
 import com.milanogc.accounting.readmodel.finder.postgres.dto.Entries;
@@ -33,6 +34,9 @@ public class AccountingController {
 
   @Autowired
   private PostgresAccountFinder accountFinder;
+  
+  @Autowired
+  private PostgresPostingFinder postingFinder;
   
   @Autowired
   private PostgresEntryFinder entryFinder;
@@ -69,11 +73,12 @@ public class AccountingController {
   }
 
   @RequestMapping(value = "/transactions", method = RequestMethod.POST)
-  public void postTransaction(@RequestBody Posting posting) {
+  public ResponseEntity<Posting> postTransaction(@RequestBody Posting posting) {
     List<EntryCommand> entries = posting.getEntries().stream()
         .map(e -> new EntryCommand(e.getAccount(), e.getAmount()))
         .collect(Collectors.toCollection(ArrayList::new));
     PostCommand command = new PostCommand(posting.getOccurredOn(), entries, posting.getDescription());
-    postingApplicationService.post(command);
+    String postingId = postingApplicationService.post(command);
+    return new ResponseEntity<Posting>(postingFinder.posting(postingId), HttpStatus.CREATED);
   }
 }
