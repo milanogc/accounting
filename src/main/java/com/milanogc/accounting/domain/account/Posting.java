@@ -1,15 +1,13 @@
 package com.milanogc.accounting.domain.account;
 
-import com.google.common.base.MoreObjects;
-import com.google.common.collect.ImmutableList;
-
-import com.milanogc.ddd.domain.Entity;
-
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
+
+import com.google.common.base.MoreObjects;
+import com.google.common.collect.ImmutableList;
+import com.milanogc.ddd.domain.Entity;
 
 public class Posting extends Entity {
 
@@ -110,7 +108,7 @@ public class Posting extends Entity {
 
     private PostingId postingId;
     private Date occurredOn;
-    private Set<Entry> entries = new HashSet<>();
+    private List<Entry> entries = new ArrayList<>();
     private String description;
 
     public Builder(PostingId postingId, Date occurredOn) {
@@ -129,7 +127,7 @@ public class Posting extends Entity {
     }
 
     public Posting build() {
-      return new Posting(this.postingId, this.occurredOn, ImmutableList.copyOf(this.entries),
+      return new Posting(this.postingId, this.occurredOn, this.entries,
           this.description);
     }
   }

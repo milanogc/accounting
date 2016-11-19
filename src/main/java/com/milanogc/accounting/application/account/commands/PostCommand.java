@@ -1,11 +1,11 @@
 package com.milanogc.accounting.application.account.commands;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
+import com.google.common.base.MoreObjects;
 import com.google.common.collect.ImmutableList;
 
 public class PostCommand {
@@ -33,10 +33,19 @@ public class PostCommand {
   public String description() {
     return this.description;
   }
-  
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .addValue(occurredOn())
+        .addValue(description())
+        .addValue(entries())
+        .toString();
+  }
+
   public static class Builder {
     private Date occurredOn;
-    private Set<EntryCommand> entries = new HashSet<>();
+    private List<EntryCommand> entries = new ArrayList<>();
     private String description;
 
     public Builder(Date occurredOn) {
@@ -54,8 +63,7 @@ public class PostCommand {
     }
 
     public PostCommand build() {
-      return new PostCommand(this.occurredOn, ImmutableList.copyOf(this.entries),
-          this.description);
+      return new PostCommand(this.occurredOn, this.entries, this.description);
     }
   }
 }

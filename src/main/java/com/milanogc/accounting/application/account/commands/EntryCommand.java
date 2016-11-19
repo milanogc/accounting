@@ -2,6 +2,8 @@ package com.milanogc.accounting.application.account.commands;
 
 import java.math.BigDecimal;
 
+import com.google.common.base.MoreObjects;
+
 public class EntryCommand {
 
   private String accountId;
@@ -19,5 +21,13 @@ public class EntryCommand {
 
   public BigDecimal amount() {
     return this.amount;
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .addValue(accountId())
+        .addValue(amount())
+        .toString();
   }
 }
