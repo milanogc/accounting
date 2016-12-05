@@ -3,6 +3,8 @@ package com.milanogc.accounting.readmodel.finder.postgres.dto;
 import java.math.BigDecimal;
 import java.util.Date;
 
+import com.google.common.base.MoreObjects;
+
 public class Entry {
 
   private String id;
@@ -58,5 +60,17 @@ public class Entry {
 
   public void setSum(BigDecimal sum) {
     this.sum = sum;
+  }
+
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .addValue(this.getId())
+        .addValue(this.getAccount())
+        .addValue(this.getAmount())
+        .addValue(this.getOccurredOn())
+        .addValue(this.getDescription())
+        .addValue(this.getSum())
+        .toString();
   }
 }

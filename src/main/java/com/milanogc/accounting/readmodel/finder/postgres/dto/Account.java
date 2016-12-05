@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonRootName;
+import com.google.common.base.MoreObjects;
 
 @JsonRootName(value = "account")
 public class Account {
@@ -71,5 +72,18 @@ public class Account {
 
   public void setBalance(BigDecimal balance) {
     this.balance = balance;
+  }
+  
+  @Override
+  public String toString() {
+    return MoreObjects.toStringHelper(this)
+        .addValue(this.getId())
+        .addValue(this.getName())
+        .addValue(this.getCreatedOn())
+        .addValue(this.getDescription())
+        .addValue(this.getParent())
+        .addValue(this.getChildren())
+        .addValue(this.getBalance())
+        .toString();
   }
 }
