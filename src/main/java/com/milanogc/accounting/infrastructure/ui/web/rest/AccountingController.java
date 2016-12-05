@@ -1,5 +1,8 @@
-package com.milanogc.accounting.port.adapter.ui.web.rest;
+package com.milanogc.accounting.infrastructure.ui.web.rest;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -8,19 +11,21 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.milanogc.accounting.application.account.AccountApplicationService;
 import com.milanogc.accounting.application.account.PostingApplicationService;
 import com.milanogc.accounting.application.account.commands.CreateAccountCommand;
 import com.milanogc.accounting.application.account.commands.EntryCommand;
 import com.milanogc.accounting.application.account.commands.PostCommand;
+import com.milanogc.accounting.infrastructure.importer.hledger.HledgerImporter;
 import com.milanogc.accounting.readmodel.finder.postgres.PostgresAccountFinder;
 import com.milanogc.accounting.readmodel.finder.postgres.PostgresEntryFinder;
 import com.milanogc.accounting.readmodel.finder.postgres.PostgresPostingFinder;
@@ -44,21 +49,23 @@ public class AccountingController {
   @Autowired
   private AccountApplicationService accountApplicationService;
   
-  @Autowired PostingApplicationService postingApplicationService;
+  @Autowired
+  private PostingApplicationService postingApplicationService;
+  
+  @Autowired
+  private JdbcTemplate jdbcTemplate;
 
-  @RequestMapping(value = "/accounts", method = RequestMethod.GET)
-  @ResponseBody
+  @GetMapping("/accounts")
   public Accounts allAccounts() {
     return accountFinder.allAccounts();
   }
 
-  @RequestMapping(value = "/accounts/{id}", method = RequestMethod.GET)
-  @ResponseBody
-  public ResponseEntity<Account> account(@PathVariable("id") String accountId) {
-    return new ResponseEntity<Account>(accountFinder.account(accountId), HttpStatus.OK);
+  @GetMapping("/accounts/{id}")
+  public ResponseEntity<Account> account(@PathVariable String id) {
+    return new ResponseEntity<Account>(accountFinder.account(id), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/accounts", method = RequestMethod.POST)
+  @PostMapping("/accounts")
   public ResponseEntity<Account> createAccount(@RequestBody Account account) {
     CreateAccountCommand command = new CreateAccountCommand(account.getName(), account.getParent(),
         account.getDescription(), new Date());
@@ -66,13 +73,12 @@ public class AccountingController {
     return new ResponseEntity<Account>(accountFinder.account(accountId), HttpStatus.CREATED);
   }
 
-  @RequestMapping(value = "/entries", method = RequestMethod.GET)
-  @ResponseBody
+  @GetMapping("/entries")
   public ResponseEntity<Entries> entriesOfAccount(@RequestParam("filter[account]") String accountId) {
     return new ResponseEntity<Entries>(entryFinder.entriesOfAccount(accountId), HttpStatus.OK);
   }
 
-  @RequestMapping(value = "/transactions", method = RequestMethod.POST)
+  @PostMapping("/transactions")
   public ResponseEntity<Posting> postTransaction(@RequestBody Posting posting) {
     List<EntryCommand> entries = posting.getEntries().stream()
         .map(e -> new EntryCommand(e.getAccount(), e.getAmount()))
@@ -80,5 +86,22 @@ public class AccountingController {
     PostCommand command = new PostCommand(posting.getOccurredOn(), entries, posting.getDescription());
     String postingId = postingApplicationService.post(command);
     return new ResponseEntity<Posting>(postingFinder.posting(postingId), HttpStatus.CREATED);
+  }
+
+  @PostMapping("/uploadJournalFile")
+  public ResponseEntity<?> uploadHledgerFile(@RequestParam MultipartFile file) {
+    try {
+      jdbcTemplate.update("DELETE FROM POSTING_ENTRY");
+      jdbcTemplate.update("DELETE FROM POSTING");
+      jdbcTemplate.update("DELETE FROM ACCOUNT_CLOSURE WHERE DESCENDANT_ACCOUNT_ID <> 'ROOT'");
+      jdbcTemplate.update("DELETE FROM ACCOUNT WHERE ID <> 'ROOT'");
+      InputStreamReader isr = new InputStreamReader(file.getInputStream(), StandardCharsets.UTF_8);
+      BufferedReader br = new BufferedReader(isr);
+      new HledgerImporter(accountApplicationService, postingApplicationService, br).createAccounts();
+      return new ResponseEntity<>(HttpStatus.OK);
+    }
+    catch (Throwable e) {
+      return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+    }
   }
 }

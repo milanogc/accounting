@@ -1,6 +1,6 @@
-package com.milanogc.accounting.port.adapter.ui.web.security;
+package com.milanogc.accounting.infrastructure.ui.web.security;
 
-import org.springframework.boot.context.embedded.FilterRegistrationBean;
+import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Component;
 

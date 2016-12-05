@@ -1,4 +1,4 @@
-package com.milanogc.accounting.port.adapter.ui.web.security;
+package com.milanogc.accounting.infrastructure.ui.web.security;
 
 import java.util.Arrays;
 import java.util.Date;

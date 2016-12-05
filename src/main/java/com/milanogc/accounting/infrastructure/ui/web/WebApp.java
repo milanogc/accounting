@@ -1,4 +1,4 @@
-package com.milanogc.accounting.port.adapter.ui.web;
+package com.milanogc.accounting.infrastructure.ui.web;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
